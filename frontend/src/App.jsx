@@ -79,7 +79,7 @@ export default function App() {
             <p className="empty-state__text">
               Загрузите скриншот с латинским текстом в панели слева,
               и нейросеть подберёт похожие кириллические шрифты из базы
-              в {health?.fonts_count?.toLocaleString() || '4 880'} шрифтов.
+              в {health?.fonts_count?.toLocaleString() || '6 231'} шрифтов.
             </p>
           </div>
         )}

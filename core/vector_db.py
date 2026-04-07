@@ -34,6 +34,11 @@ class FontVectorDB:
             metadatas=[{"file_path": str(Path(file_path).absolute())}]
         )
 
+    def is_font_exists(self, font_name: str) -> bool:
+        """Проверяет, есть ли уже такой шрифт в базе."""
+        results = self.collection.get(ids=[font_name])
+        return len(results['ids']) > 0
+
     def count(self) -> int:
         """Возвращает количество проиндексированных шрифтов."""
         return self.collection.count()

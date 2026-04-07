@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback } from 'react';
-import { Upload, X } from 'lucide-react';
+import { useState, useRef, useCallback, useEffect } from 'react';
+import { Upload, X, Clipboard } from 'lucide-react';
 import './ImageUploader.css';
 
 export default function ImageUploader({ onImageSelect, disabled }) {
@@ -22,14 +22,24 @@ export default function ImageUploader({ onImageSelect, disabled }) {
 
   const handlePaste = useCallback((e) => {
     const items = e.clipboardData?.items;
-    if (!items) return;
+    if (!items || disabled) return;
     for (const item of items) {
       if (item.type.startsWith('image/')) {
         handleFile(item.getAsFile());
         break;
       }
     }
-  }, [handleFile]);
+  }, [handleFile, disabled]);
+
+  // Global paste support
+  useEffect(() => {
+    const onGlobalPaste = (e) => {
+      // Only capture global paste if we don't have a preview yet
+      if (!preview) handlePaste(e);
+    };
+    window.addEventListener('paste', onGlobalPaste);
+    return () => window.removeEventListener('paste', onGlobalPaste);
+  }, [handlePaste, preview]);
 
   const handleChange = useCallback((e) => {
     handleFile(e.target.files?.[0]);
@@ -77,13 +87,20 @@ export default function ImageUploader({ onImageSelect, disabled }) {
         </>
       ) : (
         <>
-          <Upload size={28} strokeWidth={1.2} className="uploader__icon" />
+        <div className="uploader__empty">
+          <div className="uploader__icons">
+            <Upload size={28} strokeWidth={1.2} className="uploader__icon" />
+            <div className="uploader__icon-divider" />
+            <Clipboard size={22} strokeWidth={1.2} className="uploader__icon uploader__icon--small" />
+          </div>
           <span className="uploader__text">
             Перетащите изображение или нажмите для выбора
           </span>
-          <span className="uploader__hint">
-            Ctrl+V — вставка из буфера обмена
-          </span>
+          <div className="uploader__actions">
+            <span className="uploader__badge uploader__badge--click">File</span>
+            <span className="uploader__badge uploader__badge--paste">Ctrl+V</span>
+          </div>
+        </div>
         </>
       )}
     </div>

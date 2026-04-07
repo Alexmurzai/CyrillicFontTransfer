@@ -37,9 +37,9 @@ class BalancedBatchSampler(Sampler):
     def __len__(self):
         return len(self.indices) // self.num_classes_per_batch
 
-def train_hfr(epochs=20, batch_size=32, lr=1e-4, num_chars=8, device="cuda"):
+def train_hfr(epochs=20, batch_size=32, lr=1e-5, num_chars=8, device="cuda", load_best=True, freeze_backbone=True):
     """
-    Улучшенный цикл обучения Phase 2.1.
+    Улучшенный цикл обучения Phase 2.1 (с поддержкой дообучения).
     """
     # 1. Данные
     dataset = FontDataset(
@@ -60,17 +60,33 @@ def train_hfr(epochs=20, batch_size=32, lr=1e-4, num_chars=8, device="cuda"):
     # Для валидации обычный лоадер
     val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=2)
     
-    print(f"Phase 2.1 Training: {len(train_set)} fonts. Batch Size: {batch_size} (16 fonts x 2 samples).")
+    print(f"Phase 2.1 Training: {len(train_set)} fonts. Batch Size: {batch_size}.")
 
-    # 2. Модель (теперь с предобученными весами)
+    # 2. Модель
     model = HFRNet(signature_dim=256).to(device)
+    
+    # Загрузка предобученных весов
+    best_model_path = "models/hfr_model_best.pth"
+    if load_best and os.path.exists(best_model_path):
+        print(f"[*] Loading existing weights from {best_model_path}...")
+        model.load_state_dict(torch.load(best_model_path, map_location=device))
+    
+    # Заморозка весов Backbone (EfficientNet)
+    if freeze_backbone:
+        print("[*] Freezing backbone layers...")
+        for param in model.backbone.model.features.parameters():
+            param.requires_grad = False
+    
     criterion = TripletLoss(margin=0.5)
     
-    # Оптимизатор с небольшим LR для fine-tuning
-    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
+    # Оптимизатор (фильтруем замороженные параметры)
+    trainable_params = [p for p in model.parameters() if p.requires_grad]
+    optimizer = optim.AdamW(trainable_params, lr=lr, weight_decay=1e-4)
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
 
     os.makedirs("models", exist_ok=True)
+    
+    # Инициализируем начальный лосс значением из модели, если не загружаем (или бесконечностью)
     best_val_loss = float('inf')
 
     # 3. Обучение
@@ -101,9 +117,6 @@ def train_hfr(epochs=20, batch_size=32, lr=1e-4, num_chars=8, device="cuda"):
                 batch_imgs = batch_imgs.to(device)
                 batch_labels = batch_labels.to(device)
                 
-                # Здесь нам нужны позитивные пары для расчета лосса на валидации
-                # Но для простоты используем тот же батч. 
-                # (На валидации лосс может быть выше, так как нет пар, это нормально)
                 signatures, _ = model(batch_imgs)
                 val_loss = criterion(signatures, batch_labels)
                 total_val_loss += val_loss.item()
@@ -115,7 +128,6 @@ def train_hfr(epochs=20, batch_size=32, lr=1e-4, num_chars=8, device="cuda"):
         
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
-            # Сохраняем и саму модель, и веса для инференса
             torch.save(model.state_dict(), "models/hfr_model_best.pth")
             print("--- New best model saved! ---")
             
@@ -123,5 +135,5 @@ def train_hfr(epochs=20, batch_size=32, lr=1e-4, num_chars=8, device="cuda"):
 
 if __name__ == "__main__":
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(f"Fine-tuning HFRNet on {device}")
-    train_hfr(epochs=20, batch_size=32, device=device)
+    print(f"Incremental learning HFRNet on {device}")
+    train_hfr(epochs=20, batch_size=32, device=device, load_best=True, freeze_backbone=True)

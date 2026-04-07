@@ -68,7 +68,8 @@ def build_index(font_dirs, output_json):
 if __name__ == "__main__":
     FONT_ROOTS = [
         r"D:\applications\CyrillicFontTransfer\All fonts from Office 365 [v4.37 from 2023-10-10]",
-        r"D:\applications\CyrillicFontTransfer\Fonts CYR"
+        r"D:\applications\CyrillicFontTransfer\Fonts CYR",
+        r"D:\applications\CyrillicFontTransfer\fonts_db\CreativeMarket_vol8"
     ]
     OUTPUT = "data/fonts_index.json"
     

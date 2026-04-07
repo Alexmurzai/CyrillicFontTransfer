@@ -22,7 +22,7 @@ def prepare_test_fonts(fonts_dir: Path):
     if not fonts_dir.exists():
         fonts_dir.mkdir(parents=True)
     
-    ttf_files = list(fonts_dir.glob("*.ttf")) + list(fonts_dir.glob("*.otf"))
+    ttf_files = list(fonts_dir.rglob("*.ttf")) + list(fonts_dir.rglob("*.otf"))
     if not ttf_files:
         print("[!] Папка fonts_db пуста. Копируем тестовые шрифты из C:\\Windows\\Fonts...")
         windows_fonts = ["arial.ttf", "calibri.ttf", "times.ttf"] # Популярные кириллические шрифты
@@ -61,8 +61,17 @@ def build_db(fonts_dir_name: str = "fonts_db", sample_text: str = "АБВГД\n�
     for font_path in ttf_files:
         font_name = font_path.stem  # Название файла без расширения
         
+        # Пропуск существующих
+        if db.is_font_exists(font_name):
+            continue
+
         # Шаг 2.1: Рендеринг
-        print(f"  -> Обработка: {font_name}...", end=" ")
+        # Безопасный принт для Windows консолей
+        try:
+            print(f"  -> Обработка: {font_name}...", end=" ", flush=True)
+        except UnicodeEncodeError:
+            print(f"  -> Обработка: {font_name.encode('ascii', 'ignore').decode('ascii')}...", end=" ", flush=True)
+
         image = render_font_sample(str(font_path), text=sample_text, size=(224, 224))
         
         if image is None:
