@@ -1,8 +1,10 @@
 /* ── Font Card ── */
 
 .font-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+  background: rgba(20, 20, 20, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: border-color var(--duration-normal) var(--ease),
@@ -10,13 +12,13 @@
 }
 
 .font-card:hover {
-  border-color: var(--border-hover);
-  box-shadow: var(--shadow-glow);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 /* Preview area */
 .font-card__preview {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.92);
   padding: var(--sp-4) var(--sp-5);
   min-height: 70px;
   display: flex;

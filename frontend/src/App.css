@@ -15,8 +15,10 @@
   height: 100vh;
   overflow-y: auto;
   padding: var(--sp-8) var(--sp-8) var(--sp-6);
-  background: var(--bg-primary);
-  border-right: 1px solid var(--border);
+  background: rgba(10, 10, 10, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   flex-direction: column;
   gap: var(--sp-6);
@@ -29,7 +31,9 @@
   height: 100vh;
   overflow-y: auto;
   padding: var(--sp-8) var(--sp-8) var(--sp-6);
-  background: var(--bg-secondary);
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 /* ── Brand Header ── */
@@ -150,8 +154,9 @@
 .loading-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   flex-direction: column;
   align-items: center;

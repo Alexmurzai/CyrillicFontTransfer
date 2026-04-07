@@ -16,9 +16,14 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--bg-secondary);
-  padding-bottom: var(--sp-4);
-  border-bottom: 1px solid var(--border);
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: var(--sp-3) var(--sp-4) var(--sp-4);
+  margin: 0 calc(-1 * var(--sp-8));
+  padding-left: var(--sp-8);
+  padding-right: var(--sp-8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   margin-bottom: var(--sp-2);
 }
 
@@ -111,7 +116,7 @@
   justify-content: center;
   gap: var(--sp-2);
   padding: var(--sp-4);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-md);
   font-size: 0.8rem;
   font-weight: 500;
@@ -119,6 +124,9 @@
   transition: all var(--duration-normal) var(--ease);
   width: 100%;
   margin-bottom: var(--sp-10);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .font-feed__more:hover {
