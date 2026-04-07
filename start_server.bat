@@ -26,7 +26,8 @@ echo [2/2] Запуск Cloudflare Tunnel...
 echo       Публичный URL появится ниже:
 echo.
 
-cloudflared.exe tunnel --url http://localhost:8000
+set GODEBUG=netdns=go
+cloudflared.exe tunnel --url http://localhost:8000 --protocol http2 --edge-ip-version 4
 
 echo.
 echo Туннель закрыт. Не забудьте закрыть окно backend.

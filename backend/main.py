@@ -51,6 +51,16 @@ engine: InferenceEngine | None = None
 font_categories: dict[int, str] = {}
 
 
+@app.get("/")
+def read_root():
+    """Корневой роут для проверки доступности."""
+    return {
+        "message": "HFR API is running",
+        "docs": "/docs",
+        "health": "/api/health"
+    }
+
+
 def pil_to_base64(img) -> str:
     """Конвертирует PIL Image в data:image/png;base64,... строку."""
     if img is None:
