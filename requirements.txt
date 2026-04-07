@@ -1,0 +1,35 @@
+# ========================================
+# CyrillicFontTransfer — dependencies
+# ========================================
+
+# UI
+customtkinter>=5.2.2
+tkinterdnd2>=0.3.0       # Drag & Drop support for Tkinter (Windows)
+Pillow>=10.3.0
+
+# ML / Deep Learning
+torch>=2.2.0             # torch with CUDA support — install separately via official link
+torchvision>=0.17.0
+transformers>=4.40.0     # HuggingFace: CLIP and others
+open-clip-torch>=2.24.0  # OpenCLIP — alternative to HF CLIP
+
+# OCR
+easyocr>=1.7.1
+
+# Vector DB
+chromadb>=0.5.0
+
+# Font tools
+fonttools>=4.51.0
+
+# Utilities
+numpy>=1.26.4
+scipy>=1.13.0
+tqdm>=4.66.0
+requests>=2.31.0
+
+# ----------------------------------------
+# NOTE: PyTorch with CUDA must be installed
+# separately via:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+# ----------------------------------------

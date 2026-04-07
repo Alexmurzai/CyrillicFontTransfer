@@ -1,0 +1,63 @@
+# ═══════════════════════════════════════
+# HFR — Cyrillic Font Finder
+# ═══════════════════════════════════════
+
+# ML Models & Data (large files)
+models/
+data/
+*.pth
+*.faiss
+*.onnx
+
+# Font database
+fonts_db/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+*.so
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Node.js
+frontend/node_modules/
+frontend/dist/
+
+# Temp files
+temp/
+*.tmp
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Generated fonts previews
+generated_fonts/
+
+# Raw font directories (too large for GitHub)
+Fonts CYR/
+All fonts from Office 365 [v4.37 from 2023-10-10]/
+
+# Cloudflare
+cloudflared.exe
+
+# Misc
+*.bak
+*.orig

@@ -1,0 +1,121 @@
+/* ── Sidebar ── */
+
+.sidebar__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+/* Text input */
+.text-input {
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  transition: border-color var(--duration-fast) var(--ease);
+}
+
+.text-input::placeholder {
+  color: var(--text-muted);
+}
+
+.text-input:focus {
+  border-color: var(--border-active);
+  outline: none;
+}
+
+/* Search button */
+.search-btn {
+  width: 100%;
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--bg-primary);
+  background: var(--text-primary);
+  transition: all var(--duration-fast) var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+}
+
+.search-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.search-btn:active {
+  transform: translateY(0);
+}
+
+.search-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Slider group */
+.slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+/* Error message */
+.error-msg {
+  padding: var(--sp-3) var(--sp-4);
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  color: var(--score-low);
+}
+
+/* Settings */
+.settings-toggle {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-1) 0;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease);
+  width: fit-content;
+}
+
+.settings-toggle:hover,
+.settings-toggle--active {
+  color: var(--text-primary);
+}
+
+.settings-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border);
+}
+
+.settings-panel__hint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.text-input--small {
+  padding: var(--sp-2) var(--sp-3);
+  font-size: 0.75rem;
+  font-family: monospace;
+}

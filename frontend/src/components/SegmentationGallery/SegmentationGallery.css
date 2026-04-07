@@ -1,0 +1,42 @@
+/* ── Segmentation Gallery ── */
+
+.seg-gallery {
+  display: flex;
+  gap: var(--sp-2);
+  overflow-x: auto;
+  padding: var(--sp-2) 0;
+}
+
+.seg-gallery::-webkit-scrollbar {
+  height: 3px;
+}
+
+.seg-gallery__item {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color var(--duration-fast) var(--ease);
+}
+
+.seg-gallery__item:hover {
+  border-color: var(--border-active);
+}
+
+.seg-gallery__item img {
+  max-width: 44px;
+  max-height: 44px;
+  object-fit: contain;
+}
+
+.seg-gallery__empty {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding: var(--sp-4) 0;
+}

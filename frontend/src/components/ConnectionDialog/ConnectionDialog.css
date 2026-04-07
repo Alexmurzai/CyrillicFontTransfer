@@ -1,0 +1,170 @@
+/* ── Connection Dialog ── */
+
+.conn-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  animation: fadeIn var(--duration-slow) var(--ease);
+}
+
+.conn-dialog {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-8);
+  max-width: 440px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  box-shadow: var(--shadow-lg);
+}
+
+.conn-dialog__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: rgba(248, 113, 113, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--score-low);
+}
+
+.conn-dialog__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.conn-dialog__text {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.conn-dialog__input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.conn-dialog__label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.conn-dialog__input {
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  transition: border-color var(--duration-fast) var(--ease);
+}
+
+.conn-dialog__input::placeholder {
+  color: var(--text-muted);
+}
+
+.conn-dialog__input:focus {
+  border-color: var(--border-active);
+  outline: none;
+}
+
+.conn-dialog__hint {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.conn-dialog__actions {
+  display: flex;
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+}
+
+.conn-dialog__btn {
+  flex: 1;
+  padding: var(--sp-3);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all var(--duration-fast) var(--ease);
+}
+
+.conn-dialog__btn--primary {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.conn-dialog__btn--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.conn-dialog__btn--secondary {
+  border: 1px solid var(--border-hover);
+  color: var(--text-secondary);
+}
+
+.conn-dialog__btn--secondary:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+.conn-dialog__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.conn-dialog__status {
+  font-size: 0.75rem;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.conn-dialog__status--success {
+  color: var(--score-high);
+  background: rgba(74, 222, 128, 0.08);
+}
+
+.conn-dialog__status--error {
+  color: var(--score-low);
+  background: rgba(248, 113, 113, 0.08);
+}
+
+.conn-dialog__status--testing {
+  color: var(--score-mid);
+  background: rgba(250, 204, 21, 0.08);
+}
+
+/* ── Settings gear (in sidebar footer) ── */
+.settings-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  transition: all var(--duration-fast) var(--ease);
+}
+
+.settings-btn:hover {
+  color: var(--text-primary);
+  background: var(--accent-dim);
+}
