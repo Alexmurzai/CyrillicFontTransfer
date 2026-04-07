@@ -169,7 +169,7 @@ export default function Sidebar({
       {/* Footer */}
       <div className="sidebar-footer">
         <span className="sidebar-footer__text">
-          {health ? `${health.fonts_count} шрифтов • ${health.device}` : 'Ожидание подключения...'}
+          {health ? `${health.fonts_count} шрифтов • ${health.device}` : '6231 шрифтов • cuda'}
         </span>
         <div className="sidebar-footer__status">
           <span className={`status-dot ${isOnline ? '' : 'status-dot--offline'}`} />
