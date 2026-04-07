@@ -1,3 +1,4 @@
+/* ── Sidebar ── */
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -18,80 +19,12 @@
   gap: var(--sp-3);
 }
 
-/* Text input */
-.text-input {
-  width: 100%;
-  padding: var(--sp-3) var(--sp-4);
-  background: var(--bg-input);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  font-size: 0.85rem;
-  color: var(--text-primary);
-  transition: border-color var(--duration-fast) var(--ease);
-}
-
-.text-input::placeholder {
-  color: var(--text-muted);
-}
-
-.text-input:focus {
-  border-color: var(--border-active);
-  outline: none;
-}
-
-/* Search button */
-.search-btn {
-  width: 100%;
-  padding: var(--sp-3) var(--sp-5);
-  border-radius: var(--radius-md);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--bg-primary);
-  background: var(--text-primary);
-  transition: all var(--duration-fast) var(--ease);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--sp-2);
-}
-
-.search-btn:hover {
-  background: var(--accent-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-}
-
-.search-btn:active {
-  transform: translateY(0);
-}
-
-.search-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.search-btn:not(:disabled) {
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-8);
-  padding: var(--sp-8);
-  background: var(--bg-secondary);
-  border-right: 1px solid var(--border);
-  height: 100%;
-  overflow-y: auto;
-}
-
+/* ── Brand ── */
 .brand {
   display: flex;
   flex-direction: column;
   gap: var(--sp-1);
+  margin-bottom: var(--sp-2);
 }
 
 .brand__name {
@@ -123,6 +56,70 @@
   max-width: 200px;
 }
 
+/* ── Inputs ── */
+.text-input {
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  transition: border-color var(--duration-fast) var(--ease);
+}
+
+.text-input::placeholder {
+  color: var(--text-muted);
+}
+
+.text-input:focus {
+  border-color: var(--border-active);
+  outline: none;
+}
+
+.text-input--small {
+  padding: var(--sp-2) var(--sp-3);
+  font-size: 0.75rem;
+  font-family: monospace;
+}
+
+/* ── Search Button ── */
+.search-btn {
+  width: 100%;
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--bg-primary);
+  background: var(--text-primary);
+  transition: all var(--duration-fast) var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+}
+
+.search-btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.search-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.search-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.search-btn:not(:disabled) {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+/* ── Extras ── */
 .section-label {
   font-size: 0.7rem;
   font-weight: 600;
@@ -135,9 +132,19 @@
 .divider {
   height: 1px;
   background: var(--border);
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
+.error-msg {
+  padding: var(--sp-3) var(--sp-4);
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  color: var(--score-low);
+}
+
+/* ── Footer & Status ── */
 .sidebar-footer {
   margin-top: auto;
   display: flex;
@@ -165,7 +172,7 @@
   height: 6px;
   border-radius: 50%;
   background: var(--score-high);
-  box-shadow: 0 0 8px var(--score-high);
+  box-shadow: 0 0 10px var(--score-high);
   animation: glowPulse 2s infinite;
 }
 
@@ -175,24 +182,14 @@
   animation: none;
 }
 
-/* Slider group */
+/* ── Sliders ── */
 .slider-group {
   display: flex;
   flex-direction: column;
   gap: var(--sp-4);
 }
 
-/* Error message */
-.error-msg {
-  padding: var(--sp-3) var(--sp-4);
-  background: rgba(248, 113, 113, 0.08);
-  border: 1px solid rgba(248, 113, 113, 0.2);
-  border-radius: var(--radius-md);
-  font-size: 0.8rem;
-  color: var(--score-low);
-}
-
-/* Settings */
+/* ── Settings ── */
 .settings-toggle {
   background: none;
   border: none;
@@ -226,10 +223,4 @@
   font-size: 0.7rem;
   color: var(--text-muted);
   line-height: 1.4;
-}
-
-.text-input--small {
-  padding: var(--sp-2) var(--sp-3);
-  font-size: 0.75rem;
-  font-family: monospace;
 }
