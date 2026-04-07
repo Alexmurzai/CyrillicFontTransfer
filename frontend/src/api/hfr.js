@@ -37,7 +37,10 @@ export function setApiUrl(url) {
  */
 export async function checkHealth() {
   const base = getApiUrl();
-  const res = await fetch(`${base}/api/health`, { signal: AbortSignal.timeout(5000) });
+  const res = await fetch(`${base}/api/health`, { 
+    signal: AbortSignal.timeout(5000),
+    headers: { 'Bypass-Tunnel-Reminder': 'true' }
+  });
   if (!res.ok) throw new Error('Backend недоступен');
   return res.json();
 }
@@ -69,6 +72,7 @@ export async function recognizeFont(imageFile, options = {}, signal) {
   const res = await fetch(`${base}/api/recognize?${params}`, {
     method: 'POST',
     body: formData,
+    headers: { 'Bypass-Tunnel-Reminder': 'true' },
     signal,
   });
 
@@ -98,7 +102,10 @@ export async function updatePreviews(fontPaths, options = {}, signal) {
   });
 
   const base = getApiUrl();
-  const res = await fetch(`${base}/api/update-previews?${params}`, { signal });
+  const res = await fetch(`${base}/api/update-previews?${params}`, { 
+    signal,
+    headers: { 'Bypass-Tunnel-Reminder': 'true' }
+  });
 
   if (!res.ok) throw new Error('Ошибка обновления превью');
   return res.json();
@@ -109,7 +116,9 @@ export async function updatePreviews(fontPaths, options = {}, signal) {
  */
 export async function downloadFont(fontId, fontName) {
   const base = getApiUrl();
-  const res = await fetch(`${base}/api/font/download/${fontId}`);
+  const res = await fetch(`${base}/api/font/download/${fontId}`, {
+    headers: { 'Bypass-Tunnel-Reminder': 'true' }
+  });
 
   if (!res.ok) throw new Error('Ошибка скачивания');
 
@@ -129,7 +138,9 @@ export async function downloadFont(fontId, fontName) {
  */
 export async function getCategories() {
   const base = getApiUrl();
-  const res = await fetch(`${base}/api/categories`);
+  const res = await fetch(`${base}/api/categories`, {
+    headers: { 'Bypass-Tunnel-Reminder': 'true' }
+  });
   if (!res.ok) throw new Error('Ошибка получения категорий');
   return res.json();
 }
