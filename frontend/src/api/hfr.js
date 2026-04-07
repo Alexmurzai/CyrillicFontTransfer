@@ -4,6 +4,7 @@
  */
 
 const STORAGE_KEY = 'hfr_api_url';
+const DEFAULT_API_URL = 'https://hfr-alex-font.loca.lt';
 
 /**
  * Получить текущий API URL.
@@ -16,7 +17,7 @@ export function getApiUrl() {
   }
   const envUrl = import.meta.env.VITE_API_URL;
   if (envUrl) return envUrl.replace(/\/+$/, '');
-  return '';
+  return DEFAULT_API_URL;
 }
 
 /**

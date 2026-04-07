@@ -158,7 +158,7 @@ export default function Sidebar({
               className="text-input text-input--small"
               value={apiUrl}
               onChange={(e) => handleApiUrlChange(e.target.value)}
-              placeholder="http://localhost:8000"
+              placeholder="https://hfr-alex-font.loca.lt"
             />
           </div>
         )}
