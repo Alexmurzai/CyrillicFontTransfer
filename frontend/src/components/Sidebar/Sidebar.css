@@ -1,4 +1,16 @@
-/* ── Sidebar ── */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  padding: var(--sp-10) var(--sp-8);
+  background: rgba(17, 17, 17, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid var(--border);
+  height: 100%;
+  overflow-y: auto;
+  box-shadow: 20px 0 50px rgba(0, 0, 0, 0.2);
+}
 
 .sidebar__section {
   display: flex;
@@ -86,25 +98,30 @@
 .brand__name {
   font-family: var(--font-mono);
   font-weight: 800;
-  font-size: 1.5rem;
-  letter-spacing: -0.05em;
+  font-size: 1.8rem;
+  letter-spacing: -0.06em;
   color: var(--text-primary);
   animation: breath 4s ease-in-out infinite;
   display: inline-block;
+  margin-bottom: var(--sp-1);
 }
 
 .brand__version {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
-  margin-left: var(--sp-1);
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  vertical-align: middle;
 }
 
 .brand__sub {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
-  line-height: 1.4;
-  margin-top: calc(-1 * var(--sp-6));
+  line-height: 1.5;
+  margin-top: 0;
+  max-width: 200px;
 }
 
 .section-label {
