@@ -53,7 +53,9 @@ generated_fonts/
 
 # Raw font directories (too large for GitHub)
 Fonts CYR/
-All fonts from Office 365 [v4.37 from 2023-10-10]/
+All fonts from Office 365*/
+**/All fonts from Office 365*/
+**/Fonts CYR*/
 
 # Cloudflare
 cloudflared.exe
