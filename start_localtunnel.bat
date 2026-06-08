@@ -1,31 +1,46 @@
 @echo off
-echo.
-echo  ╔══════════════════════════════════════════╗
-echo  ║   HFR — Hierarchical Font Recognition   ║
-echo  ║   Backend + Persistent Tunnel Launcher  ║
-echo  ╚══════════════════════════════════════════╝
-echo.
-
+title HFR Master Launcher
+setlocal
 cd /d "%~dp0"
 
-REM 1. Запуск FastAPI backend (в новом окне)
-echo [1/2] Запуск FastAPI backend на порту 8000...
-start "HFR-Backend" cmd /k "cd /d %~dp0 && py -3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8000"
+:: Настройка цветов (голубой текст на черном)
+color 0B
 
-REM Ждём 5 секунд
-echo       Ожидание загрузки (5 сек)...
-timeout /t 5 /nobreak >nul
+echo ======================================================
+echo   HFR - Hierarchical Font Recognition Launcher
+echo ======================================================
+echo.
 
-REM 2. Запуск Localtunnel с постоянным поддоменом
-echo [2/2] Запуск туннеля (subdomain)...
+:: 1. Проверка, не запущен ли уже сервер
+netstat -ano | findstr :8000 | findstr LISTENING >nul
+if %errorlevel% equ 0 (
+    echo [!] Порт 8000 уже занят. Возможно, бэкенд уже запущен.
+    echo     Пробую запустить туннель напрямую...
+    goto start_tunnel
+)
+
+:: 2. Запуск бэкенда в фоновом (минимизированном) окне
+echo [*] Запуск FastAPI Backend (в новом окне)...
+start "HFR-Backend-Server" /min cmd /c "py -3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8000"
+
+:: 3. Ожидание готовности API (особенно важно для CUDA)
+echo [*] Ожидание инициализации нейросети (загрузка весов на RTX 3090)...
+:wait_loop
+timeout /t 2 /nobreak >nul
+curl -s http://localhost:8000/api/health | findstr "ok" >nul
+if %errorlevel% neq 0 (
+    echo     . . . API еще не отвечает
+    goto wait_loop
+)
+
+echo [+] Бэкенд онлайн!
 echo.
-echo ВНИМАНИЕ: Ссылка теперь будет постоянной: 
-echo https://hfr-alex-font.loca.lt
-echo.
-echo Если попросят пароль, введите свой IP с сайта 2ip.ru
+
+:start_tunnel
+:: 4. Запуск туннеля
+echo [*] Активация туннеля: https://hfr-alex-font.loca.lt
+echo [!] ВНИМАНИЕ: Если спросят пароль - введи свой IP с сайта 2ip.ru
 echo.
 npx -y localtunnel --port 8000 --subdomain hfr-alex-font
 
-echo.
-echo Туннель закрыт.
 pause

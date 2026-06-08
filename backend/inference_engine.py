@@ -43,6 +43,9 @@ class InferenceEngine:
         Сегментирует изображение на отдельные символы с помощью OpenCV.
         """
         img = cv2.imread(image_path)
+        if img is None:
+            raise ValueError(f"Не удалось загрузить изображение по пути: {image_path}. Проверьте формат файла.")
+            
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         
         # Авто-инверсия (если фон темный, а текст светлый)

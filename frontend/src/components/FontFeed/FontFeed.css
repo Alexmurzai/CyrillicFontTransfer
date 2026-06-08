@@ -129,6 +129,12 @@
   -webkit-backdrop-filter: blur(6px);
 }
 
+@media (max-width: 900px) {
+  .font-feed__more {
+    margin-bottom: 80px; /* Приподнимаем кнопку над системной плашкой мобильных браузеров */
+  }
+}
+
 .font-feed__more:hover {
   border-color: var(--border-hover);
   color: var(--text-primary);
