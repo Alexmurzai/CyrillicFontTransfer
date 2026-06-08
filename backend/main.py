@@ -9,9 +9,11 @@ import base64
 from io import BytesIO
 from pathlib import Path
 
-from fastapi import FastAPI, UploadFile, File, HTTPException, Query
+from fastapi import FastAPI, UploadFile, File, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import FileResponse, Response, HTMLResponse
+
+from backend.stats_db import init_db, log_visit, log_recognition, log_download, get_stats_summary, render_stats_html
 
 # Добавляем корень проекта в path для импортов ml_core
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -19,6 +21,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from backend.inference_engine import InferenceEngine
 from backend.font_classifier import classify_font, classify_all_fonts
 from backend.api_models import FontMatch, RecognitionResponse, HealthResponse
+
+# New imports for auth and limits
+from backend.users_db import init_users_db, decrement_balance, get_anonymous_usage, increment_anonymous_usage
+from backend.auth import router as auth_router, SECRET_KEY, ALGORITHM
+from backend.payments import router as payments_router
+import jwt
 
 
 app = FastAPI(
@@ -45,6 +53,9 @@ app.add_middleware(
 # Папка для временных загрузок
 UPLOAD_DIR = Path("temp/uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+app.include_router(auth_router)
+app.include_router(payments_router)
 
 # Глобальные объекты
 engine: InferenceEngine | None = None
@@ -74,6 +85,8 @@ def pil_to_base64(img) -> str:
 @app.on_event("startup")
 def load_engine():
     """Загрузка ML-модели и FAISS при старте."""
+    init_db()
+    init_users_db()
     global engine, font_categories
     try:
         engine = InferenceEngine(
@@ -100,8 +113,13 @@ def load_engine():
 # ──────────────────────────────────────────────
 
 @app.get("/api/health", response_model=HealthResponse)
-def health_check():
+def health_check(request: Request):
     """Статус здоровья сервиса."""
+    # Записываем визит (с защитой от спама, раз в 30 мин с одного IP)
+    client_host = request.client.host if request.client else "unknown"
+    user_agent = request.headers.get("user-agent", "")
+    log_visit(client_host, user_agent)
+    
     return HealthResponse(
         status="ok" if engine else "error",
         engine_loaded=engine is not None,
@@ -112,6 +130,7 @@ def health_check():
 
 @app.post("/api/recognize")
 async def recognize_font(
+    request: Request,
     file: UploadFile = File(...),
     top_k: int = Query(default=50, ge=1, le=200),
     preview_text: str = Query(default="АБВГДЕabc"),
@@ -126,6 +145,26 @@ async def recognize_font(
     """
     if engine is None:
         raise HTTPException(status_code=503, detail="HFR Engine не загружен")
+
+    # Limit check
+    auth_header = request.headers.get("Authorization")
+    fingerprint = request.headers.get("X-Fingerprint", "unknown")
+    
+    if auth_header and auth_header.startswith("Bearer "):
+        token = auth_header.split(" ")[1]
+        try:
+            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            user_id = int(payload.get("sub"))
+            if not decrement_balance(user_id):
+                raise HTTPException(status_code=402, detail="limit_exceeded_registered")
+        except jwt.PyJWTError:
+            raise HTTPException(status_code=401, detail="Invalid token")
+    else:
+        # Anonymous limit
+        usage = get_anonymous_usage(fingerprint)
+        if usage >= 2:
+            raise HTTPException(status_code=402, detail="limit_exceeded_anonymous")
+        increment_anonymous_usage(fingerprint)
 
     # Сохраняем файл временно
     file_path = UPLOAD_DIR / file.filename
@@ -178,6 +217,12 @@ async def recognize_font(
             if len(result_matches) >= top_k:
                 break
 
+        # Логируем распознавание
+        if matches and len(matches) > 0:
+            top_font_name = matches[0].get("font_name", "unknown")
+            client_host = request.client.host if request.client else "unknown"
+            log_recognition(category, top_font_name, client_host)
+
         return {
             "char_images": char_images_b64,
             "matches": [m.model_dump() for m in result_matches],
@@ -226,7 +271,7 @@ def get_preview(
 
 
 @app.get("/api/font/download/{font_id}")
-def download_font(font_id: int):
+def download_font(font_id: int, request: Request):
     """Скачивание .ttf файла по ID из метаданных."""
     if engine is None:
         raise HTTPException(status_code=503, detail="HFR Engine не загружен")
@@ -239,6 +284,10 @@ def download_font(font_id: int):
 
     if not os.path.exists(font_path):
         raise HTTPException(status_code=404, detail=f"Файл шрифта не найден: {font_path}")
+
+    # Логируем скачивание
+    client_host = request.client.host if request.client else "unknown"
+    log_download(font_id, meta["name"], client_host)
 
     return FileResponse(
         path=font_path,
@@ -291,6 +340,19 @@ def update_previews(
             previews[path] = ""
 
     return {"previews": previews}
+
+
+@app.get("/api/stats")
+def get_api_stats():
+    """Возвращает агрегированную статистику в формате JSON."""
+    return get_stats_summary()
+
+
+@app.get("/api/stats/dashboard", response_class=HTMLResponse)
+def get_stats_dashboard():
+    """Возвращает красивый HTML дашборд статистики."""
+    stats = get_stats_summary()
+    return render_stats_html(stats)
 
 
 if __name__ == "__main__":

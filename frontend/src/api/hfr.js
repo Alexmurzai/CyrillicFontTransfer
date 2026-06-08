@@ -56,6 +56,8 @@ export async function recognizeFont(imageFile, options = {}, signal) {
     letterSpacing = 0,
     wordSpacing = 20,
     category = 'all',
+    token = null,
+    fingerprint = 'unknown',
   } = options;
 
   const formData = new FormData();
@@ -69,11 +71,14 @@ export async function recognizeFont(imageFile, options = {}, signal) {
     category,
   });
 
+  const headers = { 'Bypass-Tunnel-Reminder': 'true', 'X-Fingerprint': fingerprint };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
   const base = getApiUrl();
   const res = await fetch(`${base}/api/recognize?${params}`, {
     method: 'POST',
     body: formData,
-    headers: { 'Bypass-Tunnel-Reminder': 'true' },
+    headers,
     signal,
   });
 
