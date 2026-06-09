@@ -101,7 +101,7 @@ export default function App() {
         {isLoading && (
           <div className="loading-overlay">
             <div className="loading-spinner" />
-            <span className="loading-text">Нейросеть анализирует изображение...</span>
+            <span className="loading-text">{t('loading_analyzing')}</span>
           </div>
         )}
 

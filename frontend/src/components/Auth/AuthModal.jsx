@@ -38,7 +38,7 @@ export default function AuthModal() {
     <div className="modal-overlay" onClick={() => setShowAuthModal(false)}>
       <div className="modal-content" onClick={e => e.stopPropagation()}>
         <h2>{isRegister ? t('btn_register') : t('btn_login')}</h2>
-        {error && <div className="modal-error">{error}</div>}
+        {error && <div className="modal-error">{t(error)}</div>}
         
         <form onSubmit={handleSubmit} className="auth-form">
           <input 

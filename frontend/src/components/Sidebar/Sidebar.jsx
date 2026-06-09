@@ -16,6 +16,44 @@ export default function Sidebar({
   health,
 }) {
   const { t } = useI18n();
+  const getLocalizedError = useCallback((errStr) => {
+    if (!errStr) return '';
+    
+    const directTranslation = t(errStr);
+    if (directTranslation !== errStr) return directTranslation;
+    
+    if (errStr.startsWith('Ошибка сервера:')) {
+      const status = errStr.split(':')[1]?.trim() || '';
+      return t('err_server_error_status', { status });
+    }
+    
+    if (errStr.startsWith('Ошибка обработки:')) {
+      const details = errStr.substring('Ошибка обработки:'.length).trim();
+      return t('err_processing_failed_details', { details });
+    }
+    
+    if (errStr.includes('Backend недоступен') || errStr.includes('Failed to fetch')) {
+      return t('Backend недоступен');
+    }
+    if (errStr.includes('Символы не найдены')) {
+      return t('Символы не найдены на изображении. Попробуйте другое.');
+    }
+    if (errStr.includes('HFR Engine не загружен')) {
+      return t('HFR Engine не загружен');
+    }
+    if (errStr.includes('Ошибка обновления превью')) {
+      return t('Ошибка обновления превью');
+    }
+    if (errStr.includes('Ошибка скачивания')) {
+      return t('Ошибка скачивания');
+    }
+    if (errStr.includes('Ошибка получения категорий')) {
+      return t('Ошибка получения категорий');
+    }
+    
+    return errStr;
+  }, [t]);
+
   const [imageFile, setImageFile] = useState(null);
   const [previewText, setPreviewText] = useState('АБВГДЕabc');
   const [letterSpacing, setLetterSpacing] = useState(0);
@@ -106,7 +144,7 @@ export default function Sidebar({
       </button>
 
       {/* Error */}
-      {error && <div className="error-msg">{error}</div>}
+      {error && <div className="error-msg">{getLocalizedError(error)}</div>}
 
       {/* Segmentation */}
       <div className="sidebar__section">

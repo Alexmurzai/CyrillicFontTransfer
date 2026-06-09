@@ -39,7 +39,7 @@ export default function FontFeed({
       <div className="font-feed__controls">
         <span className="font-feed__title">{t('results')}</span>
         <span className="font-feed__count">
-          {filtered.length} из {total}
+          {filtered.length} {t('of')} {total}
         </span>
 
         {/* Category filters */}

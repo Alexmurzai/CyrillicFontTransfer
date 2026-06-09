@@ -54,7 +54,10 @@ export function AuthProvider({ children }) {
       },
       body: JSON.stringify({ email, password })
     });
-    if (!res.ok) throw new Error('Login failed');
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.detail || 'err_login_failed');
+    }
     const data = await res.json();
     setToken(data.access_token);
     setUser({ balance: data.balance, subscription_end: data.subscription_end });
@@ -70,7 +73,10 @@ export function AuthProvider({ children }) {
       },
       body: JSON.stringify({ email, password })
     });
-    if (!res.ok) throw new Error('Registration failed');
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.detail || 'err_register_failed');
+    }
     const data = await res.json();
     setToken(data.access_token);
     setUser({ balance: data.balance, subscription_end: data.subscription_end });

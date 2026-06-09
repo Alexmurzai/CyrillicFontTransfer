@@ -75,6 +75,24 @@ const dictionaries = {
     // Авторизация
     auth_switch_to_login: "Уже есть аккаунт? Войти",
     auth_switch_to_register: "Нет аккаунта? Зарегистрироваться",
+
+    // Дополнительно
+    of: "из",
+    loading_analyzing: "Нейросеть анализирует изображение...",
+
+    // Errors
+    "Backend недоступен": "Сервер недоступен",
+    "Ошибка обновления превью": "Ошибка обновления превью",
+    "Ошибка скачивания": "Не удалось скачать шрифт",
+    "Ошибка получения категорий": "Не удалось получить категории шрифтов",
+    "HFR Engine не загружен": "Модель ИИ еще запускается, пожалуйста, подождите",
+    "Символы не найдены на изображении. Попробуйте другое.": "Символы не найдены на изображении. Попробуйте другое.",
+    "err_server_error_status": "Ошибка сервера: {status}",
+    "err_processing_failed_details": "Ошибка обработки: {details}",
+    "Email already registered": "Этот email уже зарегистрирован",
+    "Incorrect email or password": "Неверный email или пароль",
+    "err_login_failed": "Не удалось войти в аккаунт",
+    "err_register_failed": "Не удалось зарегистрироваться",
   },
   en: {
     marketing_top: "Save 5 hours of manual search when adapting your brand to Cyrillic markets. Upload Latin - get the perfect Cyrillic match instantly.",
@@ -148,6 +166,24 @@ const dictionaries = {
     // Auth
     auth_switch_to_login: "Already have an account? Log in",
     auth_switch_to_register: "Need an account? Sign up",
+
+    // Additional
+    of: "of",
+    loading_analyzing: "The neural network is analyzing the image...",
+
+    // Errors
+    "Backend недоступен": "Server is unavailable",
+    "Ошибка обновления превью": "Error updating font preview",
+    "Ошибка скачивания": "Failed to download font file",
+    "Ошибка получения категорий": "Failed to fetch font categories",
+    "HFR Engine не загружен": "AI model is still starting up, please wait",
+    "Символы не найдены на изображении. Попробуйте другое.": "No characters found on the image. Please try another one.",
+    "err_server_error_status": "Server error: {status}",
+    "err_processing_failed_details": "Processing error: {details}",
+    "Email already registered": "This email is already registered",
+    "Incorrect email or password": "Incorrect email or password",
+    "err_login_failed": "Failed to log in",
+    "err_register_failed": "Failed to register",
   }
 };
 
