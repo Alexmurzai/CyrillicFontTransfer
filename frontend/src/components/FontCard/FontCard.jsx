@@ -1,15 +1,7 @@
 import { Download } from 'lucide-react';
 import { downloadFont } from '../../api/hfr';
+import { useI18n } from '../../context/I18nContext';
 import './FontCard.css';
-
-const CATEGORY_LABELS = {
-  serif: 'Serif',
-  sans: 'Sans',
-  script: 'Script',
-  display: 'Display',
-  mono: 'Mono',
-  unknown: '—',
-};
 
 function getScoreClass(pct) {
   if (pct >= 70) return 'font-card__score--high';
@@ -24,6 +16,7 @@ function shortenPath(fullPath) {
 }
 
 export default function FontCard({ match, rank, scale = 1, style }) {
+  const { t } = useI18n();
   const {
     id,
     font_name,
@@ -49,7 +42,7 @@ export default function FontCard({ match, rank, scale = 1, style }) {
         {preview_base64 ? (
           <img
             src={preview_base64}
-            alt={`Превью ${font_name}`}
+            alt={t('alt_preview', { name: font_name })}
             loading="lazy"
             style={{ transform: `scale(${scale})` }}
           />
@@ -67,7 +60,7 @@ export default function FontCard({ match, rank, scale = 1, style }) {
           </div>
           <div className="font-card__badges">
             <span className={`font-card__category font-card__category--${font_category}`}>
-              {CATEGORY_LABELS[font_category] || font_category}
+              {t('category_' + (font_category || 'unknown'))}
             </span>
             <span className={`font-card__score ${getScoreClass(similarity_pct)}`}>
               {similarity_pct.toFixed(1)}%
@@ -79,9 +72,9 @@ export default function FontCard({ match, rank, scale = 1, style }) {
           <span className="font-card__path" title={font_path}>
             {shortenPath(font_path)}
           </span>
-          <button className="font-card__download" onClick={handleDownload} title="Скачать шрифт">
+          <button className="font-card__download" onClick={handleDownload} title={t('download_title')}>
             <Download size={13} strokeWidth={1.8} />
-            Скачать
+            {t('download_btn')}
           </button>
         </div>
       </div>

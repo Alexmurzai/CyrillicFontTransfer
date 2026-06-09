@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { ChevronDown, ZoomIn } from 'lucide-react';
+import { useI18n } from '../../context/I18nContext';
 import FontCard from '../FontCard/FontCard';
 import Slider from '../Slider/Slider';
 import './FontFeed.css';
 
 const CATEGORIES = [
-  { key: 'all', label: 'Все' },
-  { key: 'serif', label: 'Serif' },
-  { key: 'sans', label: 'Sans' },
-  { key: 'script', label: 'Script' },
-  { key: 'display', label: 'Display' },
-  { key: 'mono', label: 'Mono' },
+  { key: 'all' },
+  { key: 'serif' },
+  { key: 'sans' },
+  { key: 'script' },
+  { key: 'display' },
+  { key: 'mono' },
 ];
 
 export default function FontFeed({
@@ -21,6 +22,7 @@ export default function FontFeed({
   activeCategory,
   onCategoryChange,
 }) {
+  const { t } = useI18n();
   const [scale, setScale] = useState(1);
 
   const visibleMatches = matches.slice(0, visibleCount);
@@ -35,7 +37,7 @@ export default function FontFeed({
     <div className="font-feed" id="font-feed">
       {/* Controls */}
       <div className="font-feed__controls">
-        <span className="font-feed__title">Результаты</span>
+        <span className="font-feed__title">{t('results')}</span>
         <span className="font-feed__count">
           {filtered.length} из {total}
         </span>
@@ -52,7 +54,7 @@ export default function FontFeed({
               ].filter(Boolean).join(' ')}
               onClick={() => onCategoryChange?.(cat.key)}
             >
-              {cat.label}
+              {t('category_' + cat.key)}
             </button>
           ))}
         </div>
@@ -62,7 +64,7 @@ export default function FontFeed({
           <ZoomIn size={14} strokeWidth={1.5} className="font-feed__scale-label" />
           <div className="font-feed__scale-input">
             <Slider
-              label="Масштаб"
+              label={t('scale')}
               value={scale}
               min={0.5}
               max={2}
@@ -78,7 +80,7 @@ export default function FontFeed({
       <div className="font-feed__list">
         {filtered.length === 0 && matches.length > 0 && (
           <div className="font-feed__no-results">
-            Шрифтов в категории «{CATEGORIES.find(c => c.key === activeCategory)?.label}» не найдено
+            {t('no_fonts_in_category', { category: t('category_' + activeCategory) })}
           </div>
         )}
 
@@ -97,7 +99,7 @@ export default function FontFeed({
       {hasMore && (
         <button className="font-feed__more" onClick={onShowMore} id="show-more-btn">
           <ChevronDown size={16} strokeWidth={1.5} />
-          Показать ещё 5 ({visibleCount} / {matches.length})
+          {t('btn_show_more')} ({visibleCount} / {matches.length})
         </button>
       )}
     </div>

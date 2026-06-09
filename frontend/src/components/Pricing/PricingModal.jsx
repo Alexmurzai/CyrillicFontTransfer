@@ -11,11 +11,11 @@ export default function PricingModal() {
   if (!showPricingModal) return null;
 
   const packages = [
-    { id: "pack_20", title: "20 Searches", desc: "Pay as you go", price_rub: 290, price_usd: 3 },
-    { id: "pack_100", title: "100 Searches", desc: "Best for occasional use", price_rub: 990, price_usd: 10 },
-    { id: "sub_week", title: "1 Week Pro", desc: "Unlimited", price_rub: 1490, price_usd: 15 },
-    { id: "sub_month", title: "1 Month Pro", desc: "Unlimited", price_rub: 3990, price_usd: 40 },
-    { id: "sub_year", title: "1 Year Pro", desc: "Unlimited", price_rub: 29000, price_usd: 300 },
+    { id: "pack_20", title_key: "pkg_20_title", desc_key: "pkg_20_desc", price_rub: 290, price_usd: 3 },
+    { id: "pack_100", title_key: "pkg_100_title", desc_key: "pkg_100_desc", price_rub: 990, price_usd: 10 },
+    { id: "sub_week", title_key: "pkg_week_title", desc_key: "pkg_week_desc", price_rub: 1490, price_usd: 15 },
+    { id: "sub_month", title_key: "pkg_month_title", desc_key: "pkg_month_desc", price_rub: 3990, price_usd: 40 },
+    { id: "sub_year", title_key: "pkg_year_title", desc_key: "pkg_year_desc", price_rub: 29000, price_usd: 300 },
   ];
 
   const handleBuy = async (pkg) => {
@@ -36,11 +36,11 @@ export default function PricingModal() {
       // Simulate success for demo purposes
       if (data.payment_url) {
         await fetch(`http://127.0.0.1:8000/api/payments/mock-webhook?user_id=${user?.id || 1}&package_id=${pkg.id}`, { method: 'POST' });
-        alert('Payment successful! Balance/subscription updated.');
+        alert(t('payment_success'));
         window.location.reload();
       }
     } catch (e) {
-      alert("Payment failed");
+      alert(t('payment_failed'));
     } finally {
       setLoading(false);
       setShowPricingModal(false);
@@ -55,8 +55,8 @@ export default function PricingModal() {
         <div className="pricing-grid">
           {packages.map(pkg => (
             <div key={pkg.id} className="pricing-card">
-              <h3>{pkg.title}</h3>
-              <p className="desc">{pkg.desc}</p>
+              <h3>{t(pkg.title_key)}</h3>
+              <p className="desc">{t(pkg.desc_key)}</p>
               <div className="price">
                 {t('currency')} {lang === 'ru' ? pkg.price_rub : pkg.price_usd}
               </div>
@@ -65,7 +65,7 @@ export default function PricingModal() {
                 onClick={() => handleBuy(pkg)}
                 disabled={loading}
               >
-                Buy with {lang === 'ru' ? 'MIR/YooKassa' : 'Crypto/MoonPay'}
+                {t('buy_with', { gateway: lang === 'ru' ? t('gateway_ru') : t('gateway_en') })}
               </button>
             </div>
           ))}

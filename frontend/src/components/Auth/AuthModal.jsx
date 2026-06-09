@@ -60,7 +60,7 @@ export default function AuthModal() {
         
         <div className="modal-switch">
           <button type="button" onClick={() => setIsRegister(!isRegister)} className="btn-text">
-            {isRegister ? "Already have an account? Log in" : "Need an account? Sign up"}
+            {isRegister ? t('auth_switch_to_login') : t('auth_switch_to_register')}
           </button>
         </div>
       </div>

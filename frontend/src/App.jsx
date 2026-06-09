@@ -133,18 +133,8 @@ export default function App() {
               <p className="empty-state__text">
                 {t('empty_subtitle')}
                 <br/><br/>
-                {health ? `${health.fonts_count} шрифтов • ${health.device}` : '6231 шрифтов • cuda'}
+                {health ? t('fonts_status_format', { count: health.fonts_count, device: health.device }) : t('fonts_status_format', { count: 6231, device: 'cuda' })}
               </p>
-              
-              {!token && (
-                <div className="promo-box">
-                  <h3>Get more out of {t('title_main')}</h3>
-                  <button className="btn-primary" onClick={() => setShowAuthModal(true)}>
-                    {t('btn_register')} for 5 free searches
-                  </button>
-                  <p>Or check out our <a href="#" onClick={(e) => { e.preventDefault(); setShowPricingModal(true); }}>Pro plans</a></p>
-                </div>
-              )}
             </div>
           )}
         </main>

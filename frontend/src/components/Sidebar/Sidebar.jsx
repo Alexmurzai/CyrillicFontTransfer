@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { Settings, Search } from 'lucide-react';
 import { getApiUrl, setApiUrl } from '../../api/hfr';
+import { useI18n } from '../../context/I18nContext';
 import ImageUploader from '../ImageUploader/ImageUploader';
 import SegmentationGallery from '../SegmentationGallery/SegmentationGallery';
 import Slider from '../Slider/Slider';
@@ -14,6 +15,7 @@ export default function Sidebar({
   error,
   health,
 }) {
+  const { t } = useI18n();
   const [imageFile, setImageFile] = useState(null);
   const [previewText, setPreviewText] = useState('АБВГДЕabc');
   const [letterSpacing, setLetterSpacing] = useState(0);
@@ -70,24 +72,24 @@ export default function Sidebar({
         <span className="brand__name">HFR</span>
         <span className="brand__version">v2.1</span>
       </div>
-      <p className="brand__sub">Поиск кириллических аналогов по латинскому образцу</p>
+      <p className="brand__sub">{t('brand_subtitle')}</p>
 
       {/* Upload */}
       <div className="sidebar__section">
-        <span className="section-label">Загрузите изображение</span>
+        <span className="section-label">{t('upload_section_title')}</span>
         <ImageUploader onImageSelect={setImageFile} disabled={isLoading} />
       </div>
 
       {/* Preview text */}
       <div className="sidebar__section">
-        <span className="section-label">Текст для демонстрации</span>
+        <span className="section-label">{t('demonstration_text')}</span>
         <input
           type="text"
           className="text-input"
           value={previewText}
           onChange={(e) => setPreviewText(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Например: Привет, мир!"
+          placeholder={t('placeholder_preview')}
           id="preview-text-input"
         />
       </div>
@@ -100,7 +102,7 @@ export default function Sidebar({
         id="search-btn"
       >
         <Search size={16} strokeWidth={2} />
-        {isLoading ? 'Поиск...' : 'Найти аналоги'}
+        {isLoading ? t('searching') : t('btn_find_matches')}
       </button>
 
       {/* Error */}
@@ -108,16 +110,16 @@ export default function Sidebar({
 
       {/* Segmentation */}
       <div className="sidebar__section">
-        <span className="section-label">Сегментация</span>
+        <span className="section-label">{t('segmentation')}</span>
         <SegmentationGallery images={charImages} />
       </div>
 
       {/* Spacing sliders */}
       <div className="sidebar__section">
-        <span className="section-label">Настройки типографики</span>
+        <span className="section-label">{t('typography_settings')}</span>
         <div className="slider-group">
           <Slider
-            label="Межбуквенное расстояние"
+            label={t('letter_spacing')}
             value={letterSpacing}
             min={-20}
             max={50}
@@ -125,7 +127,7 @@ export default function Sidebar({
             id="letter-spacing-slider"
           />
           <Slider
-            label="Расстояние между словами"
+            label={t('word_spacing')}
             value={wordSpacing}
             min={0}
             max={100}
@@ -142,16 +144,16 @@ export default function Sidebar({
         <button
           className={`settings-toggle ${showSettings ? 'settings-toggle--active' : ''}`}
           onClick={() => setShowSettings(!showSettings)}
-          title="Настройки API"
+          title={t('api_settings')}
         >
           <Settings size={14} />
-          <span>Настройки API</span>
+          <span>{t('api_settings')}</span>
         </button>
 
         {showSettings && (
           <div className="settings-panel">
             <p className="settings-panel__hint">
-              Укажите адрес вашего бэкенда (например, от Cloudflare Tunnel)
+              {t('api_settings_hint')}
             </p>
             <input
               type="text"
@@ -169,11 +171,13 @@ export default function Sidebar({
       {/* Footer */}
       <div className="sidebar-footer">
         <span className="sidebar-footer__text">
-          {health ? `${health.fonts_count} шрифтов • ${health.device}` : '6231 шрифтов • cuda'}
+          {health 
+            ? t('fonts_status_format', { count: health.fonts_count, device: health.device }) 
+            : t('fonts_status_format', { count: 6231, device: 'cuda' })}
         </span>
         <div className="sidebar-footer__status">
           <span className={`status-dot ${isOnline ? '' : 'status-dot--offline'}`} />
-          <span>{isOnline ? 'Подключено' : 'Нет связи'}</span>
+          <span>{isOnline ? t('status_online') : t('status_offline')}</span>
         </div>
       </div>
     </aside>

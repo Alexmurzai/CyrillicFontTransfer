@@ -1,8 +1,10 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { Upload, X, Clipboard } from 'lucide-react';
+import { useI18n } from '../../context/I18nContext';
 import './ImageUploader.css';
 
 export default function ImageUploader({ onImageSelect, disabled }) {
+  const { t } = useI18n();
   const [dragover, setDragover] = useState(false);
   const [preview, setPreview] = useState(null);
   const inputRef = useRef(null);
@@ -80,8 +82,8 @@ export default function ImageUploader({ onImageSelect, disabled }) {
 
       {preview ? (
         <>
-          <img src={preview} alt="Загруженное изображение" className="uploader__preview" />
-          <button className="uploader__remove" onClick={handleRemove} title="Удалить">
+          <img src={preview} alt={t('alt_uploaded_image')} className="uploader__preview" />
+          <button className="uploader__remove" onClick={handleRemove} title={t('delete_title')}>
             <X size={14} strokeWidth={2} />
           </button>
         </>
@@ -94,7 +96,7 @@ export default function ImageUploader({ onImageSelect, disabled }) {
             <Clipboard size={22} strokeWidth={1.2} className="uploader__icon uploader__icon--small" />
           </div>
           <span className="uploader__text">
-            Перетащите изображение или нажмите для выбора
+            {t('upload_hint')}
           </span>
           <div className="uploader__actions">
             <span className="uploader__badge uploader__badge--click">File</span>
