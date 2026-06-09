@@ -1,9 +1,8 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import fpPromise from '@fingerprintjs/fingerprintjs';
+import { getApiUrl } from '../api/hfr';
 
 const AuthContext = createContext();
-
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => localStorage.getItem('hfr_token'));
@@ -29,7 +28,8 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (token) {
       localStorage.setItem('hfr_token', token);
-      fetch(`${API_BASE_URL}/auth/me?token=${token}`)
+      const apiBase = getApiUrl();
+      fetch(`${apiBase}/api/auth/me?token=${token}`)
         .then(res => {
           if (!res.ok) throw new Error('Invalid token');
           return res.json();
@@ -43,7 +43,8 @@ export function AuthProvider({ children }) {
   }, [token]);
 
   const login = async (email, password) => {
-    const res = await fetch(`${API_BASE_URL}/auth/login`, {
+    const apiBase = getApiUrl();
+    const res = await fetch(`${apiBase}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -55,7 +56,8 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (email, password) => {
-    const res = await fetch(`${API_BASE_URL}/auth/register`, {
+    const apiBase = getApiUrl();
+    const res = await fetch(`${apiBase}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })

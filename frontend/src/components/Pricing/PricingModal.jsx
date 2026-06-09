@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useI18n } from '../../context/I18nContext';
+import { getApiUrl } from '../../api/hfr';
 import './PricingModal.css';
 
 export default function PricingModal() {
@@ -21,8 +22,9 @@ export default function PricingModal() {
   const handleBuy = async (pkg) => {
     setLoading(true);
     const gateway = lang === 'ru' ? 'yookassa' : 'cryptomus';
+    const apiBase = getApiUrl();
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/payments/create`, {
+      const res = await fetch(`${apiBase}/api/payments/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -35,7 +37,7 @@ export default function PricingModal() {
       
       // Simulate success for demo purposes
       if (data.payment_url) {
-        await fetch(`http://127.0.0.1:8000/api/payments/mock-webhook?user_id=${user?.id || 1}&package_id=${pkg.id}`, { method: 'POST' });
+        await fetch(`${apiBase}/api/payments/mock-webhook?user_id=${user?.id || 1}&package_id=${pkg.id}`, { method: 'POST' });
         alert(t('payment_success'));
         window.location.reload();
       }
