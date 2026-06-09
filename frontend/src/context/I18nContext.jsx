@@ -52,6 +52,8 @@ const dictionaries = {
     symbols_placeholder: "Символы появятся после распознавания",
     alt_char: "Символ {index}",
     placeholder_preview: "Например: Привет, мир!",
+    placeholder_email: "Эл. почта",
+    placeholder_password: "Пароль",
     
     // Локализация пакетов цен
     pkg_20_title: "20 подборов",
@@ -123,6 +125,8 @@ const dictionaries = {
     symbols_placeholder: "Symbols will appear after recognition",
     alt_char: "Character {index}",
     placeholder_preview: "e.g., Hello, world!",
+    placeholder_email: "Email",
+    placeholder_password: "Password",
     
     // Pricing package localization
     pkg_20_title: "20 Searches",

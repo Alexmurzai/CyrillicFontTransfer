@@ -29,7 +29,9 @@ export function AuthProvider({ children }) {
     if (token) {
       localStorage.setItem('hfr_token', token);
       const apiBase = getApiUrl();
-      fetch(`${apiBase}/api/auth/me?token=${token}`)
+      fetch(`${apiBase}/api/auth/me?token=${token}`, {
+        headers: { 'Bypass-Tunnel-Reminder': 'true' }
+      })
         .then(res => {
           if (!res.ok) throw new Error('Invalid token');
           return res.json();
@@ -46,7 +48,10 @@ export function AuthProvider({ children }) {
     const apiBase = getApiUrl();
     const res = await fetch(`${apiBase}/api/auth/login`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Bypass-Tunnel-Reminder': 'true'
+      },
       body: JSON.stringify({ email, password })
     });
     if (!res.ok) throw new Error('Login failed');
@@ -59,7 +64,10 @@ export function AuthProvider({ children }) {
     const apiBase = getApiUrl();
     const res = await fetch(`${apiBase}/api/auth/register`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Bypass-Tunnel-Reminder': 'true'
+      },
       body: JSON.stringify({ email, password })
     });
     if (!res.ok) throw new Error('Registration failed');

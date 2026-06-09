@@ -43,7 +43,7 @@ export default function AuthModal() {
         <form onSubmit={handleSubmit} className="auth-form">
           <input 
             type="email" 
-            placeholder="Email" 
+            placeholder={t('placeholder_email')} 
             value={email} 
             onChange={e => setEmail(e.target.value)} 
             required 
@@ -51,7 +51,7 @@ export default function AuthModal() {
           <div className="password-input-container">
             <input 
               type={showPassword ? "text" : "password"} 
-              placeholder="Password" 
+              placeholder={t('placeholder_password')} 
               value={password} 
               onChange={e => setPassword(e.target.value)} 
               required 

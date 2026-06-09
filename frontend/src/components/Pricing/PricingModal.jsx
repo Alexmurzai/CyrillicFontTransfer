@@ -26,7 +26,10 @@ export default function PricingModal() {
     try {
       const res = await fetch(`${apiBase}/api/payments/create`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Bypass-Tunnel-Reminder': 'true'
+        },
         body: JSON.stringify({
           user_id: user?.id || 1, // fallback for mock
           package_id: pkg.id,
@@ -37,7 +40,10 @@ export default function PricingModal() {
       
       // Simulate success for demo purposes
       if (data.payment_url) {
-        await fetch(`${apiBase}/api/payments/mock-webhook?user_id=${user?.id || 1}&package_id=${pkg.id}`, { method: 'POST' });
+        await fetch(`${apiBase}/api/payments/mock-webhook?user_id=${user?.id || 1}&package_id=${pkg.id}`, { 
+          method: 'POST',
+          headers: { 'Bypass-Tunnel-Reminder': 'true' }
+        });
         alert(t('payment_success'));
         window.location.reload();
       }
