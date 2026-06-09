@@ -162,7 +162,7 @@ async def recognize_font(
     else:
         # Anonymous limit
         usage = get_anonymous_usage(fingerprint)
-        if usage >= 2:
+        if usage >= 5:
             raise HTTPException(status_code=402, detail="limit_exceeded_anonymous")
         increment_anonymous_usage(fingerprint)
 
