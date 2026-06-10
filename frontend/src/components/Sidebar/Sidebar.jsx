@@ -63,7 +63,6 @@ export default function Sidebar({
   const [showSettings, setShowSettings] = useState(false);
   const prevSettingsRef = useRef(null);
 
-  // Опции для поиска
   const getOptions = useCallback(() => ({
     previewText,
     letterSpacing,
@@ -71,19 +70,16 @@ export default function Sidebar({
     category,
   }), [previewText, letterSpacing, wordSpacing, category]);
 
-  // Поиск
   const handleSearch = useCallback(() => {
     if (!imageFile || isLoading) return;
     onRecognize?.(imageFile, getOptions());
   }, [imageFile, isLoading, onRecognize, getOptions]);
 
-  // Смена API URL
   const handleApiUrlChange = (val) => {
     setApiUrlState(val);
     setApiUrl(val);
   };
 
-  // Реагируем на изменения настроек превью (debounced через hook)
   useEffect(() => {
     const key = `${previewText}|${letterSpacing}|${wordSpacing}`;
     if (prevSettingsRef.current && prevSettingsRef.current !== key) {
@@ -96,7 +92,6 @@ export default function Sidebar({
     prevSettingsRef.current = key;
   }, [previewText, letterSpacing, wordSpacing, onPreviewUpdate]);
 
-  // Enter для запуска поиска
   const handleKeyDown = useCallback((e) => {
     if (e.key === 'Enter') handleSearch();
   }, [handleSearch]);
@@ -107,35 +102,29 @@ export default function Sidebar({
     <aside className="sidebar" id="sidebar">
       {/* Brand */}
       <div className="brand">
-        <span className="brand__name">MOCT</span>
-        <span className="brand__version">v2.1</span>
-      </div>
-      <p className="brand__sub">{t('brand_subtitle')}</p>
-
-      {/* Promo / Discounts */}
-      <div className="sidebar__promo glass">
-        <h4 className="sidebar__promo-title">ИЮНЬ 50%</h4>
-        <p className="sidebar__promo-text">Скидка за подписку на 1 год</p>
+        <span className="brand__label">{t('ai_font_engine')}</span>
+        <span className="brand__name">{t('toolbox_title')}</span>
+        <span className="brand__version">v2.1-stable</span>
       </div>
 
       {/* Upload */}
       <div className="sidebar__section">
-        <span className="section-label">{t('upload_section_title')}</span>
         <ImageUploader onImageSelect={setImageFile} disabled={isLoading} />
       </div>
 
       {/* Preview text */}
       <div className="sidebar__section">
-        <span className="section-label">{t('demonstration_text')}</span>
-        <input
-          type="text"
-          className="text-input"
-          value={previewText}
-          onChange={(e) => setPreviewText(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={t('placeholder_preview')}
-          id="preview-text-input"
-        />
+        <div className="glass" style={{ padding: 'var(--sp-6)', borderRadius: 'var(--radius-xl)' }}>
+          <input
+            type="text"
+            className="text-input"
+            value={previewText}
+            onChange={(e) => setPreviewText(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder={t('placeholder_preview')}
+            id="preview-text-input"
+          />
+        </div>
       </div>
 
       {/* Search button */}
@@ -154,31 +143,40 @@ export default function Sidebar({
 
       {/* Segmentation */}
       <div className="sidebar__section">
-        <span className="section-label">{t('segmentation')}</span>
         <SegmentationGallery images={charImages} />
       </div>
 
       {/* Spacing sliders */}
       <div className="sidebar__section">
-        <span className="section-label">{t('typography_settings')}</span>
-        <div className="slider-group">
-          <Slider
-            label={t('letter_spacing')}
-            value={letterSpacing}
-            min={-20}
-            max={50}
-            onChange={setLetterSpacing}
-            id="letter-spacing-slider"
-          />
-          <Slider
-            label={t('word_spacing')}
-            value={wordSpacing}
-            min={0}
-            max={100}
-            onChange={setWordSpacing}
-            id="word-spacing-slider"
-          />
+        <div className="glass" style={{ padding: 'var(--sp-6)', borderRadius: 'var(--radius-xl)' }}>
+          <div className="slider-group">
+            <Slider
+              label={t('letter_spacing')}
+              value={letterSpacing}
+              min={-20}
+              max={50}
+              onChange={setLetterSpacing}
+              id="letter-spacing-slider"
+            />
+            <Slider
+              label={t('word_spacing')}
+              value={wordSpacing}
+              min={0}
+              max={100}
+              onChange={setWordSpacing}
+              id="word-spacing-slider"
+            />
+          </div>
         </div>
+      </div>
+
+      {/* Promo */}
+      <div className="sidebar__promo">
+        <div className="sidebar__promo-info">
+          <h4 className="sidebar__promo-title">{t('promo_title')}</h4>
+          <p className="sidebar__promo-text">{t('promo_text')}</p>
+        </div>
+        <button className="sidebar__promo-btn">{t('claim_promo')}</button>
       </div>
 
       <div className="divider" />
@@ -204,13 +202,11 @@ export default function Sidebar({
               className="text-input text-input--small"
               value={apiUrl}
               onChange={(e) => handleApiUrlChange(e.target.value)}
-              placeholder="https://hfr-alex-font.loca.lt"
+              placeholder="https://xxx.trycloudflare.com"
             />
           </div>
         )}
       </div>
-
-      <div className="divider" />
 
       {/* Footer */}
       <div className="sidebar-footer">

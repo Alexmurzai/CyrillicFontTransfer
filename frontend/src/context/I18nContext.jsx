@@ -4,41 +4,71 @@ const I18nContext = createContext();
 
 const dictionaries = {
   ru: {
-    marketing_top: "Сэкономьте 5 часов ручного поиска при адаптации вашего бренда на кириллические рынки. Загрузите латиницу — получите идеальное кириллическое соответствие мгновенно.",
+    marketing_top: "СЭКОНОМЬТЕ 5 ЧАСОВ РУЧНОГО ПОИСКА • ЗАГРУЗИТЕ ЛАТИНИЦУ — ПОЛУЧИТЕ ИДЕАЛЬНОЕ КИРИЛЛИЧЕСКОЕ СООТВЕТСТВИЕ МГНОВЕННО",
     title_main: "Подбор кириллических шрифтов",
     empty_subtitle: "Загрузите скриншот с латинским текстом в панели слева, и нейросеть подберёт похожие кириллические шрифты из базы",
     btn_recognize: "Найти шрифты",
     btn_login: "Войти",
     btn_register: "Регистрация",
-    btn_upgrade: "Улучшить тариф",
+    btn_upgrade: "PRO",
     limit_reached: "Лимит исчерпан",
-    limit_anonymous: "Анонимный доступ: {used}/5 подборов",
-    limit_registered: "Баланс: {balance} подборов",
+    limit_anonymous: "АНОНИМНЫЙ: {used}/5",
+    limit_registered: "БАЛАНС: {balance}",
     upload_hint: "Перетащите изображение или нажмите для выбора",
     preview_text_label: "Текст превью",
     letter_spacing: "Межбуквенное расстояние",
-    word_spacing: "Пробелы",
+    word_spacing: "Расстояние между словами",
     category_all: "Все",
     category_serif: "С засечками",
     category_sans: "Без засечек",
     category_script: "Рукописные",
     category_display: "Акцидентные",
     category_mono: "Моноширинные",
+    category_unknown: "Другие",
     pricing_title: "Тарифы и лимиты",
     currency: "₽",
-    
-    // Новые переводы для полной локализации
+
+    // Navigation
+    nav_match: "MATCH",
+    nav_generator: "GENERATOR",
+    nav_library: "LIBRARY",
+
+    // Sidebar
+    ai_font_engine: "AI FONT ENGINE",
+    toolbox_title: "TOOLBOX",
+    tab_upload: "Загрузка",
+    tab_preview: "Превью",
+    tab_segments: "Сегменты",
+    tab_layout: "Параметры",
+    upgrade_to_pro: "UPGRADE TO PRO",
+
+    // Results
     results: "Результаты",
+    match_results: "Результаты подбора",
     scale: "Масштаб",
-    brand_subtitle: "Поиск кириллических аналогов по латинскому образцу",
+    ml_model_synced: "ML МОДЕЛЬ СИНХР.",
+    structural_match: "СОВПАДЕНИЕ",
+
+    // Footer status
+    status_bar_connected: "СТАТУС: ПОДКЛЮЧЕНО",
+    status_bar_offline: "СТАТУС: ОТКЛЮЧЕНО",
+    status_bar_latency: "ЗАДЕРЖКА: 24MS",
+    status_bar_api: "API: АКТИВЕН",
+
+    // Upload
+    brand_subtitle: "Поиск кириллических аналогов",
     upload_section_title: "Загрузите изображение",
+    drop_reference_font: "Загрузите референс",
+    drop_reference_hint: "SVG, TTF, OTF или Изображение",
     demonstration_text: "Текст для демонстрации",
     btn_find_matches: "Найти аналоги",
     searching: "Поиск...",
     segmentation: "Сегментация",
+    detected_glyphs: "ОБНАРУЖЕННЫЕ ГЛИФЫ",
+    n_found: "{count} НАЙДЕНО",
     typography_settings: "Настройки типографики",
     api_settings: "Настройки API",
-    api_settings_hint: "Укажите адрес вашего бэкенда (например, от Cloudflare Tunnel)",
+    api_settings_hint: "Укажите адрес вашего бэкенда (напр., от Cloudflare Tunnel)",
     fonts_status_format: "{count} шрифтов • {device}",
     status_online: "Подключено",
     status_offline: "Нет связи",
@@ -46,7 +76,7 @@ const dictionaries = {
     no_fonts_in_category: "Шрифтов в категории «{category}» не найдено",
     alt_uploaded_image: "Загруженное изображение",
     delete_title: "Удалить",
-    download_btn: "Скачать",
+    download_btn: "СКАЧАТЬ",
     download_title: "Скачать шрифт",
     alt_preview: "Превью {name}",
     symbols_placeholder: "Символы появятся после распознавания",
@@ -54,8 +84,13 @@ const dictionaries = {
     placeholder_preview: "Например: Привет, мир!",
     placeholder_email: "Эл. почта",
     placeholder_password: "Пароль",
-    
-    // Локализация пакетов цен
+
+    // Promo
+    promo_title: "ИЮНЬ 50%",
+    promo_text: "Скидка за подписку на 1 год",
+    claim_promo: "ЗАБРАТЬ",
+
+    // Pricing
     pkg_20_title: "20 подборов",
     pkg_20_desc: "Разовый пакет",
     pkg_100_title: "100 подборов",
@@ -71,12 +106,12 @@ const dictionaries = {
     gateway_en: "Crypto / MoonPay",
     payment_success: "Оплата прошла успешно! Баланс/подписка обновлены.",
     payment_failed: "Ошибка оплаты",
-    
-    // Авторизация
+
+    // Auth
     auth_switch_to_login: "Уже есть аккаунт? Войти",
     auth_switch_to_register: "Нет аккаунта? Зарегистрироваться",
 
-    // Дополнительно
+    // Additional
     of: "из",
     loading_analyzing: "Нейросеть анализирует изображение...",
 
@@ -95,38 +130,68 @@ const dictionaries = {
     "err_register_failed": "Не удалось зарегистрироваться",
   },
   en: {
-    marketing_top: "Save 5 hours of manual search when adapting your brand to Cyrillic markets. Upload Latin - get the perfect Cyrillic match instantly.",
-    title_main: "Brand Localization Tool",
+    marketing_top: "SAVE 5 HOURS OF MANUAL SEARCH • UPLOAD LATIN — GET THE PERFECT CYRILLIC MATCH INSTANTLY",
+    title_main: "Cyrillic Font Matcher",
     empty_subtitle: "Upload a screenshot with Latin text in the left panel, and the neural network will find similar Cyrillic fonts from the database",
     btn_recognize: "Find Fonts",
     btn_login: "Log in",
     btn_register: "Sign up",
-    btn_upgrade: "Upgrade",
+    btn_upgrade: "PRO",
     limit_reached: "Limit reached",
-    limit_anonymous: "Anonymous: {used}/5 searches",
-    limit_registered: "Balance: {balance} searches",
+    limit_anonymous: "ANONYMOUS: {used}/5",
+    limit_registered: "BALANCE: {balance}",
     upload_hint: "Drag & drop image or click to select",
     preview_text_label: "Preview text",
-    letter_spacing: "Letter spacing",
-    word_spacing: "Word spacing",
+    letter_spacing: "Letter Spacing",
+    word_spacing: "Word Spacing",
     category_all: "All",
     category_serif: "Serif",
     category_sans: "Sans Serif",
     category_script: "Script",
     category_display: "Display",
     category_mono: "Monospace",
+    category_unknown: "Other",
     pricing_title: "Pricing & Limits",
     currency: "$",
-    
-    // New translations for full localization
+
+    // Navigation
+    nav_match: "MATCH",
+    nav_generator: "GENERATOR",
+    nav_library: "LIBRARY",
+
+    // Sidebar
+    ai_font_engine: "AI FONT ENGINE",
+    toolbox_title: "TOOLBOX",
+    tab_upload: "Upload",
+    tab_preview: "Preview",
+    tab_segments: "Segments",
+    tab_layout: "Layout",
+    upgrade_to_pro: "UPGRADE TO PRO",
+
+    // Results
     results: "Results",
+    match_results: "Match Results",
     scale: "Scale",
+    ml_model_synced: "ML MODEL SYNCED",
+    structural_match: "STRUCTURAL MATCH",
+
+    // Footer status
+    status_bar_connected: "STATUS: CONNECTED",
+    status_bar_offline: "STATUS: OFFLINE",
+    status_bar_latency: "LATENCY: 24MS",
+    status_bar_api: "API: ACTIVE",
+
+    // Upload
     brand_subtitle: "Search Cyrillic analogues by Latin sample",
     upload_section_title: "Upload image",
+    drop_reference_font: "Drop Reference Font",
+    drop_reference_hint: "SVG, TTF, OTF or Image",
     demonstration_text: "Demonstration text",
     btn_find_matches: "Find matches",
     searching: "Searching...",
     segmentation: "Segmentation",
+    detected_glyphs: "DETECTED GLYPHS",
+    n_found: "{count} FOUND",
     typography_settings: "Typography settings",
     api_settings: "API Settings",
     api_settings_hint: "Specify your backend URL (e.g., from Cloudflare Tunnel)",
@@ -137,7 +202,7 @@ const dictionaries = {
     no_fonts_in_category: "No fonts found in category '{category}'",
     alt_uploaded_image: "Uploaded image",
     delete_title: "Delete",
-    download_btn: "Download",
+    download_btn: "DOWNLOAD",
     download_title: "Download font",
     alt_preview: "Preview {name}",
     symbols_placeholder: "Symbols will appear after recognition",
@@ -145,8 +210,13 @@ const dictionaries = {
     placeholder_preview: "e.g., Hello, world!",
     placeholder_email: "Email",
     placeholder_password: "Password",
-    
-    // Pricing package localization
+
+    // Promo
+    promo_title: "JUNE 50%",
+    promo_text: "Discount for 1-year subscription",
+    claim_promo: "CLAIM",
+
+    // Pricing
     pkg_20_title: "20 Searches",
     pkg_20_desc: "Pay as you go",
     pkg_100_title: "100 Searches",
@@ -162,7 +232,7 @@ const dictionaries = {
     gateway_en: "Crypto / MoonPay",
     payment_success: "Payment successful! Balance/subscription updated.",
     payment_failed: "Payment failed",
-    
+
     // Auth
     auth_switch_to_login: "Already have an account? Log in",
     auth_switch_to_register: "Need an account? Sign up",

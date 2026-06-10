@@ -9,12 +9,18 @@ export default function SegmentationGallery({ images = [] }) {
   }
 
   return (
-    <div className="seg-gallery" id="segmentation-gallery">
-      {images.map((src, i) => (
-        <div className="seg-gallery__item fade-in" key={i} style={{ animationDelay: `${i * 50}ms` }}>
-          <img src={src} alt={t('alt_char', { index: i + 1 })} />
-        </div>
-      ))}
+    <div className="glass" style={{ padding: 'var(--sp-6)', borderRadius: 'var(--radius-xl)' }}>
+      <div className="seg-gallery__header">
+        <span className="seg-gallery__label">{t('detected_glyphs')}</span>
+        <span className="seg-gallery__count">{t('n_found', { count: images.length })}</span>
+      </div>
+      <div className="seg-gallery" id="segmentation-gallery">
+        {images.map((src, i) => (
+          <div className="seg-gallery__item fade-in" key={i} style={{ animationDelay: `${i * 50}ms` }}>
+            <img src={src} alt={t('alt_char', { index: i + 1 })} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -28,7 +28,6 @@ export default function FontFeed({
   const visibleMatches = matches.slice(0, visibleCount);
   const hasMore = visibleCount < matches.length;
 
-  // Фильтруем на клиенте (дублирующий фильтр, основной — на сервере)
   const filtered = activeCategory === 'all'
     ? visibleMatches
     : visibleMatches.filter(m => m.font_category === activeCategory);
@@ -37,7 +36,13 @@ export default function FontFeed({
     <div className="font-feed" id="font-feed">
       {/* Controls */}
       <div className="font-feed__controls">
-        <span className="font-feed__title">{t('results')}</span>
+        <span className="font-feed__title">{t('match_results')}</span>
+        
+        <span className="font-feed__status">
+          <span className="font-feed__status-dot" />
+          {t('ml_model_synced')}
+        </span>
+
         <span className="font-feed__count">
           {filtered.length} {t('of')} {total}
         </span>

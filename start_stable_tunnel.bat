@@ -32,7 +32,8 @@ echo.
 
 :restart_tunnel
 echo [%time%] Запуск туннеля...
-.\cloudflared.exe tunnel --url http://127.0.0.1:8000
+set GODEBUG=netdns=go
+.\cloudflared.exe tunnel --url http://127.0.0.1:8000 --protocol http2 --edge-ip-version 4
 echo.
 echo [%time%] ВНИМАНИЕ: Тоннель прерван! Перезапуск через 5 секунд...
 ping 127.0.0.1 -n 6 >nul

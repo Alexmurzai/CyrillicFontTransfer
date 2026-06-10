@@ -27,9 +27,9 @@ export default function App() {
   useEffect(() => {
     if (error === 'limit_exceeded_anonymous' || error === 'limit_exceeded_registered') {
       if (!token) {
-        setShowAuthModal(true); // Ask anonymous to register
+        setShowAuthModal(true);
       } else {
-        setShowPricingModal(true); // Ask registered to upgrade
+        setShowPricingModal(true);
       }
     }
   }, [error, token, setShowAuthModal, setShowPricingModal]);
@@ -49,30 +49,36 @@ export default function App() {
 
   const hasResults = matches.length > 0;
   const isLimitError = error === 'limit_exceeded_anonymous' || error === 'limit_exceeded_registered';
+  const isOnline = health?.engine_loaded === true;
 
   return (
     <div className="app-wrapper">
       <AuthModal />
       <PricingModal />
 
-      {/* Top Marketing Bar (Marquee) */}
-      <div className="top-marketing-bar">
-        <div className="marquee-content">
-          <span>Сэкономьте 5 часов ручного поиска при адаптации вашего бренда на кириллические рынки. Загрузите латиницу — получите идеальное кириллическое соответствие мгновенно • Сэкономьте 5 часов ручного поиска при адаптации вашего бренда на кириллические рынки. Загрузите латиницу — получите идеальное кириллическое соответствие мгновенно</span>
-        </div>
-      </div>
-
-      {/* Header / Nav */}
+      {/* ── Fixed Header ── */}
       <header className="app-header">
-        <div className="header-brand" style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', letterSpacing: '0.05em' }}>
-          MOCT
-        </div>
-        
+        <div className="header-brand">MOCT</div>
+
+        {/* Navigation */}
+        <nav className="header-nav">
+          <a className="header-nav__link header-nav__link--active" href="#">
+            {t('nav_match')}
+          </a>
+          <a className="header-nav__link" href="#">
+            {t('nav_generator')}
+          </a>
+          <a className="header-nav__link" href="#">
+            {t('nav_library')}
+          </a>
+        </nav>
+
+        {/* Actions */}
         <div className="header-actions">
           <button className="btn-lang" onClick={toggleLang}>
-            <Globe size={18} /> {lang.toUpperCase()}
+            {lang === 'ru' ? 'EN / RU' : 'EN / RU'}
           </button>
-          
+
           {!token ? (
             <>
               <span className="usage-info">
@@ -98,6 +104,25 @@ export default function App() {
         </div>
       </header>
 
+      {/* ── Fixed Sidebar ── */}
+      <Sidebar
+        onRecognize={handleRecognize}
+        onPreviewUpdate={handlePreviewUpdate}
+        charImages={charImages}
+        isLoading={isLoading}
+        error={isLimitError ? null : error}
+        health={health}
+      />
+
+      {/* ── Marquee ── */}
+      <div className="top-marketing-bar">
+        <div className="marquee-content">
+          <span>{t('marketing_top')}</span>
+          <span>{t('marketing_top')}</span>
+        </div>
+      </div>
+
+      {/* ── Main Content ── */}
       <div className="app">
         {/* Loading overlay */}
         {isLoading && (
@@ -107,17 +132,7 @@ export default function App() {
           </div>
         )}
 
-        {/* Left: Sidebar */}
-        <Sidebar
-          onRecognize={handleRecognize}
-          onPreviewUpdate={handlePreviewUpdate}
-          charImages={charImages}
-          isLoading={isLoading}
-          error={isLimitError ? null : error}
-          health={health}
-        />
-
-        {/* Right: Feed */}
+        {/* Feed */}
         <main className="feed" id="feed">
           {hasResults ? (
             <FontFeed
@@ -141,6 +156,24 @@ export default function App() {
           )}
         </main>
       </div>
+
+      {/* ── Fixed Footer Status Bar ── */}
+      <footer className="app-footer">
+        <div className="footer-left">
+          © 2024 MOCT AI Engine
+        </div>
+        <div className="footer-right">
+          <span className={`footer-status ${isOnline ? 'footer-status--connected' : 'footer-status--info'}`}>
+            {isOnline ? t('status_bar_connected') : t('status_bar_offline')}
+          </span>
+          <span className="footer-status footer-status--info">
+            {t('status_bar_latency')}
+          </span>
+          <span className="footer-status footer-status--info">
+            {t('status_bar_api')}
+          </span>
+        </div>
+      </footer>
     </div>
   );
 }

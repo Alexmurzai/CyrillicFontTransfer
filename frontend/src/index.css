@@ -1,28 +1,10 @@
 /* ═══════════════════════════════════════════
-   HFR Design System — CSS Reset & Tokens
+   MOCT Design System — CSS Reset & Tokens
+   Based on Stitch MCP: MOCT High-Contrast Creative
    ═══════════════════════════════════════════ */
 
-/* ── Typography ── */
-@font-face {
-  font-family: 'Calvino Grande Black';
-  src: url('/fonts/Calvino-Grande-Black-trial.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Stratos Light';
-  src: url('/fonts/Stratos-Light.otf') format('opentype');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Dotum';
-  src: url('/fonts/Dotum.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&family=Work+Sans:wght@400;500&display=swap');
 
 /* ── Reset ── */
 *, *::before, *::after {
@@ -39,9 +21,9 @@ html {
 }
 
 body {
-  font-family: var(--font-ui);
-  background: var(--bg-primary);
-  color: var(--text-primary);
+  font-family: var(--font-body);
+  background: var(--surface);
+  color: var(--on-surface);
   line-height: 1.5;
   overflow: hidden;
   height: 100vh;
@@ -54,39 +36,31 @@ body {
   isolation: isolate;
 }
 
-/* ── Static Background Image (lowest layer) ── */
+/* ── Fixed Background Image (lowest layer) ── */
 #root::before {
   content: "";
   position: fixed;
   inset: 0;
   background: url('/bg.jpg') center center / cover no-repeat;
-  z-index: -1;
+  z-index: -2;
   pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: luminosity;
 }
 
-/* ── Screen Backlight (Ambient Glow) ── */
+/* ── Ambient Glow (neon purple) ── */
 #root::after {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.25) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.25) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.25) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(139, 92, 246, 0.25) 0px, transparent 50%);
+  background-image:
+    radial-gradient(ellipse at 0% 0%, rgba(108, 99, 255, 0.15) 0px, transparent 50%),
+    radial-gradient(ellipse at 100% 0%, rgba(0, 219, 233, 0.1) 0px, transparent 50%),
+    radial-gradient(ellipse at 100% 100%, rgba(108, 99, 255, 0.1) 0px, transparent 50%),
+    radial-gradient(ellipse at 0% 100%, rgba(255, 75, 137, 0.08) 0px, transparent 50%);
   pointer-events: none;
-  z-index: 9999;
-  opacity: 0.9;
-  animation: backlight-flicker 6s infinite ease-in-out;
-}
-
-@keyframes backlight-flicker {
-  0%, 100% { opacity: 0.9; transform: scale(1); }
-  5% { opacity: 0.7; transform: scale(1.02); }
-  10% { opacity: 0.9; transform: scale(1); }
-  25% { opacity: 0.8; transform: scale(0.98); }
-  50% { opacity: 1.0; transform: scale(1.01); }
-  75% { opacity: 0.8; transform: scale(1); }
+  z-index: -1;
+  opacity: 0.8;
 }
 
 img {
@@ -117,59 +91,82 @@ input, textarea {
 
 /* ── Design Tokens ── */
 :root {
-  /* Фон */
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #111111;
-  --bg-card: #161616;
-  --bg-elevated: #1c1c1c;
-  --bg-input: #141414;
+  /* Surface */
+  --surface: #131314;
+  --surface-dim: #131314;
+  --surface-bright: #3a393a;
+  --surface-container-lowest: #0e0e0f;
+  --surface-container-low: #1c1b1c;
+  --surface-container: #201f20;
+  --surface-container-high: #2a2a2b;
+  --surface-container-highest: #353436;
+  --surface-variant: #353436;
+  --surface-glass: rgba(20, 20, 22, 0.75);
 
-  /* Текст */
-  --text-primary: #f0f0f0;
-  --text-secondary: #999999;
-  --text-muted: #555555;
-  --text-label: #777777;
+  /* Primary */
+  --primary: #c4c0ff;
+  --on-primary: #2000a4;
+  --primary-container: #8781ff;
+  --on-primary-container: #1b0091;
+  --inverse-primary: #4f44e2;
+  --neon-purple-glow: rgba(108, 99, 255, 0.4);
 
-  /* Акцент */
-  --accent: #e8e8e8;
-  --accent-hover: #ffffff;
-  --accent-dim: rgba(255, 255, 255, 0.06);
-  --accent-glow: rgba(255, 255, 255, 0.03);
+  /* Secondary */
+  --secondary: #d3fbff;
+  --on-secondary: #00363a;
+  --secondary-container: #00eefc;
+  --secondary-fixed-dim: #00dbe9;
 
-  /* Сходство по цвету */
-  --score-high: #4ade80;
-  --score-mid: #facc15;
-  --score-low: #f87171;
+  /* Tertiary */
+  --tertiary: #ffb1c3;
+  --on-tertiary: #66002c;
+  --tertiary-container: #ff4b89;
 
-  /* Категории шрифтов */
-  --cat-serif: #a78bfa;
-  --cat-sans: #60a5fa;
-  --cat-script: #f472b6;
-  --cat-display: #fb923c;
-  --cat-mono: #34d399;
-  --cat-unknown: #6b7280;
+  /* Error */
+  --error: #ffb4ab;
+  --on-error: #690005;
+  --error-container: #93000a;
 
-  /* Границы */
-  --border: rgba(255, 255, 255, 0.06);
-  --border-hover: rgba(255, 255, 255, 0.12);
-  --border-active: rgba(255, 255, 255, 0.2);
+  /* Text */
+  --on-surface: #e5e2e3;
+  --on-surface-variant: #c7c4d8;
+  --on-background: #e5e2e3;
+  --inverse-surface: #e5e2e3;
+  --inverse-on-surface: #313031;
 
-  /* Типографика */
-  --font-ui: 'Stratos Light', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-heading: 'Calvino Grande Black', 'Inter', sans-serif;
-  --font-small: 'Dotum', 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  /* Borders */
+  --outline: #918fa1;
+  --outline-variant: #464555;
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --border-glass-hover: rgba(255, 255, 255, 0.2);
 
-  /* Типографическая шкала (Fontfabric style) */
-  --text-huge: 5rem;
-  --text-h1: 3.5rem;
-  --text-h2: 2.5rem;
-  --text-h3: 1.75rem;
-  --text-body: 1.125rem;
-  --text-sm: 0.875rem;
-  --text-xs: 0.75rem;
+  /* Status */
+  --success-neon: #39FF14;
+  --warning-amber: #FFBF00;
 
-  /* Отступы */
+  /* Category Colors */
+  --cat-serif: #c4c0ff;
+  --cat-sans: #00dbe9;
+  --cat-script: #ffb1c3;
+  --cat-display: #FFBF00;
+  --cat-mono: #39FF14;
+  --cat-unknown: #918fa1;
+
+  /* Typography */
+  --font-headline: 'Epilogue', sans-serif;
+  --font-body: 'Work Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Typography Scale */
+  --text-display-hero: 120px;
+  --text-headline-lg: 64px;
+  --text-headline-md: 32px;
+  --text-body-lg: 20px;
+  --text-body-md: 16px;
+  --text-ui-label: 14px;
+  --text-status: 12px;
+
+  /* Spacing */
   --sp-1: 4px;
   --sp-2: 8px;
   --sp-3: 12px;
@@ -179,21 +176,27 @@ input, textarea {
   --sp-8: 32px;
   --sp-10: 40px;
   --sp-12: 48px;
+  --gutter: 2rem;
+  --panel-padding: 2.5rem;
+  --margin-safe: 4rem;
 
-  /* Скругления */
-  --radius-xs: 4px;
-  --radius-sm: 6px;
+  /* Radii */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
+  --radius-2xl: 20px;
 
-  /* Тени */
+  /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 20px rgba(255, 255, 255, 0.03);
+  --shadow-glow-purple: 0 0 30px rgba(108, 99, 255, 0.4);
+  --shadow-glow-cyan: 0 0 20px rgba(0, 219, 233, 0.3);
+  --shadow-glow-green: 0 0 10px rgba(57, 255, 20, 0.4);
 
-  /* Анимации */
+  /* Animations */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
@@ -201,91 +204,130 @@ input, textarea {
   --duration-normal: 200ms;
   --duration-slow: 350ms;
 
-  /* Скроллбар */
-  --scrollbar-w: 5px;
-  --scrollbar-bg: transparent;
-  --scrollbar-thumb: #333333;
-  --scrollbar-thumb-hover: #444444;
+  /* Sidebar */
+  --sidebar-width: 320px;
+  --header-height: 96px;
+  --footer-height: 40px;
 }
 
-/* ── Глобальный скроллбар ── */
+/* ── Scrollbar ── */
 ::-webkit-scrollbar {
-  width: var(--scrollbar-w);
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--scrollbar-bg);
+  background: rgba(20, 20, 22, 0.5);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 10px;
+  background: var(--outline-variant);
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
+  background: var(--primary);
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
+  scrollbar-color: var(--outline-variant) rgba(20, 20, 22, 0.5);
 }
 
 /* ── Selection ── */
 ::selection {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: var(--primary-container);
+  color: var(--on-primary-container);
 }
 
-/* ── Shimmer / Skeleton ── */
+/* ── Animations ── */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(57, 255, 20, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(57, 255, 20, 0); }
+}
+
+/* ── Utility Classes ── */
+.fade-in {
+  animation: fadeIn var(--duration-slow) var(--ease) both;
+}
+
 .skeleton {
   background: linear-gradient(
     90deg,
-    var(--bg-card) 25%,
-    var(--bg-elevated) 50%,
-    var(--bg-card) 75%
+    var(--surface-container) 25%,
+    var(--surface-container-high) 50%,
+    var(--surface-container) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
   border-radius: var(--radius-md);
 }
 
-/* ── Fade-in ── */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-in {
-  animation: fadeIn var(--duration-slow) var(--ease) both;
-}
-
-/* ── Pulse ── */
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-/* ── Glow Pulse ── */
-@keyframes glowPulse {
-  0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
-}
-
-/* ── Breath ── */
-@keyframes breath {
-  0%, 100% { transform: scale(1); opacity: 1; text-shadow: 0 0 0px rgba(255, 255, 255, 0); }
-  50% { transform: scale(1.02); opacity: 0.9; text-shadow: 0 0 15px rgba(255, 255, 255, 0.1); }
-}
-
-/* ── Blur Background ── */
 .glass {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--surface-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+}
+
+/* ── Range Slider Global ── */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 24px;
+  width: 12px;
+  border-radius: 2px;
+  background: var(--primary);
+  cursor: pointer;
+  margin-top: -10px;
+  box-shadow: var(--shadow-glow-purple);
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: var(--outline-variant);
+  border-radius: 2px;
+}
+input[type=range]::-moz-range-thumb {
+  height: 24px;
+  width: 12px;
+  border-radius: 2px;
+  background: var(--primary);
+  cursor: pointer;
+  border: none;
+  box-shadow: var(--shadow-glow-purple);
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: var(--outline-variant);
+  border-radius: 2px;
 }
