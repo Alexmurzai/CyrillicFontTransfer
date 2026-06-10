@@ -47,10 +47,9 @@ echo [+] Бэкенд онлайн!
 echo.
 
 :start_tunnel
-:: 4. Запуск туннеля
-echo [*] Активация туннеля: https://average-bullfrog-69.loca.lt
+echo [*] Активация туннеля: https://hfr-alex-font-v2.loca.lt
 echo [!] ВНИМАНИЕ: Если спросят пароль - введи свой IP с сайта 2ip.ru
 echo.
-npx -y localtunnel --port 8000 --subdomain hfr-alex-font
+npx -y localtunnel --port 8000 --subdomain hfr-alex-font-v2
 
 pause
