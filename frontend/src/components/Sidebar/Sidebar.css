@@ -28,8 +28,8 @@
 }
 
 .brand__name {
-  font-family: var(--font-mono);
-  font-weight: 800;
+  font-family: var(--font-heading);
+  font-weight: 900;
   font-size: 1.8rem;
   letter-spacing: -0.06em;
   color: var(--text-primary);
@@ -144,6 +144,28 @@
   border-radius: var(--radius-md);
   font-size: 0.8rem;
   color: var(--score-low);
+}
+
+/* ── Promo / Payment ── */
+.sidebar__promo {
+  padding: var(--sp-4);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.sidebar__promo-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-bottom: var(--sp-2);
+}
+
+.sidebar__promo-text {
+  font-family: var(--font-small);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
 }
 
 /* ── Footer & Status ── */

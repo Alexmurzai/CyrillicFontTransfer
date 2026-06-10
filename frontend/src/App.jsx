@@ -55,15 +55,17 @@ export default function App() {
       <AuthModal />
       <PricingModal />
 
-      {/* Top Marketing Bar */}
+      {/* Top Marketing Bar (Marquee) */}
       <div className="top-marketing-bar">
-        {t('marketing_top')}
+        <div className="marquee-content">
+          <span>Сэкономьте 5 часов ручного поиска при адаптации вашего бренда на кириллические рынки. Загрузите латиницу — получите идеальное кириллическое соответствие мгновенно • Сэкономьте 5 часов ручного поиска при адаптации вашего бренда на кириллические рынки. Загрузите латиницу — получите идеальное кириллическое соответствие мгновенно</span>
+        </div>
       </div>
 
       {/* Header / Nav */}
       <header className="app-header">
-        <div className="header-brand">
-          {t('title_main')}
+        <div className="header-brand" style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', letterSpacing: '0.05em' }}>
+          MOCT
         </div>
         
         <div className="header-actions">

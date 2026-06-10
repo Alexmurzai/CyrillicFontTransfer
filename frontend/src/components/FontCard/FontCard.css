@@ -19,8 +19,8 @@
 /* Preview area */
 .font-card__preview {
   background: rgba(255, 255, 255, 0.92);
-  padding: var(--sp-4) var(--sp-5);
-  min-height: 70px;
+  padding: var(--sp-6) var(--sp-5);
+  min-height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,7 +30,7 @@
 .font-card__preview img {
   max-width: 100%;
   height: auto;
-  max-height: 120px;
+  max-height: 200px;
   object-fit: contain;
   transition: transform var(--duration-normal) var(--ease);
 }
@@ -67,8 +67,9 @@
 }
 
 .font-card__name {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: 900;
   color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;

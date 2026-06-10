@@ -13,8 +13,12 @@ echo.
 
 cd /d "%~dp0frontend"
 
-echo [1/1] Установка зависимостей (на случай новых пакетов)...
-call npm install --legacy-peer-deps
+if not exist node_modules (
+    echo [1/2] Установка зависимостей (node_modules не найден)...
+    call npm install --legacy-peer-deps
+) else (
+    echo [1/2] node_modules найден. Пропуск установки зависимостей.
+)
 
 echo.
 echo [2/2] Запуск Vite frontend dev-сервера...

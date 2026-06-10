@@ -21,15 +21,25 @@ if %errorlevel% equ 0 (
 
 :: 2. Запуск бэкенда в фоновом (минимизированном) окне
 echo [*] Запуск FastAPI Backend (в новом окне)...
-start "HFR-Backend-Server" /min cmd /c "py -3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8000"
+set PY_CMD=py -3
+where py >nul 2>nul
+if %errorlevel% neq 0 set PY_CMD=python
+start "HFR-Backend-Server" /min cmd /c "%PY_CMD% -m uvicorn backend.main:app --host 0.0.0.0 --port 8000"
 
 :: 3. Ожидание готовности API (особенно важно для CUDA)
 echo [*] Ожидание инициализации нейросети (загрузка весов на RTX 3090)...
+set /a retry_count=0
 :wait_loop
+set /a retry_count+=1
+if %retry_count% gtr 30 (
+    echo [!] Ошибка: Сервер не ответил за 60 секунд. Проверьте окно бэкенда на наличие ошибок!
+    pause
+    exit /b 1
+)
 timeout /t 2 /nobreak >nul
 curl -s http://localhost:8000/api/health | findstr "ok" >nul
 if %errorlevel% neq 0 (
-    echo     . . . API еще не отвечает
+    echo     . . . API еще не отвечает (попытка %retry_count%/30)
     goto wait_loop
 )
 

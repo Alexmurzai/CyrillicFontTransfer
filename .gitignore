@@ -63,3 +63,11 @@ cloudflared.exe
 # Misc
 *.bak
 *.orig
+
+# Root-level font files (copies of public/fonts)
+/*.ttf
+/*.otf
+
+# Backups and prompt instructions
+*.zip
+promt_for_stich.txt

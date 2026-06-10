@@ -7,13 +7,29 @@
 }
 
 .top-marketing-bar {
-  background: linear-gradient(90deg, #cba6f7, #89b4fa);
-  color: #11111b;
-  text-align: center;
-  padding: 8px 20px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  background: var(--accent);
+  color: var(--bg-primary);
+  text-transform: uppercase;
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  letter-spacing: 0.1em;
+  padding: 10px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
   z-index: 100;
+  display: flex;
+}
+
+.marquee-content {
+  display: inline-block;
+  animation: marquee 20s linear infinite;
+  padding-left: 100%;
+}
+
+@keyframes marquee {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(-100%, 0); }
 }
 
 .app-header {

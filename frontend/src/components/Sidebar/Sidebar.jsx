@@ -107,10 +107,16 @@ export default function Sidebar({
     <aside className="sidebar" id="sidebar">
       {/* Brand */}
       <div className="brand">
-        <span className="brand__name">HFR</span>
+        <span className="brand__name">MOCT</span>
         <span className="brand__version">v2.1</span>
       </div>
       <p className="brand__sub">{t('brand_subtitle')}</p>
+
+      {/* Promo / Discounts */}
+      <div className="sidebar__promo glass">
+        <h4 className="sidebar__promo-title">ИЮНЬ 50%</h4>
+        <p className="sidebar__promo-text">Скидка за подписку на 1 год</p>
+      </div>
 
       {/* Upload */}
       <div className="sidebar__section">

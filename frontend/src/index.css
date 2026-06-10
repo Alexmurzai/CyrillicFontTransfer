@@ -2,6 +2,28 @@
    HFR Design System — CSS Reset & Tokens
    ═══════════════════════════════════════════ */
 
+/* ── Typography ── */
+@font-face {
+  font-family: 'Calvino Grande Black';
+  src: url('/fonts/Calvino-Grande-Black-trial.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Stratos Light';
+  src: url('/fonts/Stratos-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Dotum';
+  src: url('/fonts/Dotum.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* ── Reset ── */
 *, *::before, *::after {
   margin: 0;
@@ -133,8 +155,19 @@ input, textarea {
   --border-active: rgba(255, 255, 255, 0.2);
 
   /* Типографика */
-  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-ui: 'Stratos Light', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-heading: 'Calvino Grande Black', 'Inter', sans-serif;
+  --font-small: 'Dotum', 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Типографическая шкала (Fontfabric style) */
+  --text-huge: 5rem;
+  --text-h1: 3.5rem;
+  --text-h2: 2.5rem;
+  --text-h3: 1.75rem;
+  --text-body: 1.125rem;
+  --text-sm: 0.875rem;
+  --text-xs: 0.75rem;
 
   /* Отступы */
   --sp-1: 4px;
