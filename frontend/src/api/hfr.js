@@ -4,7 +4,7 @@
  */
 
 const STORAGE_KEY = 'hfr_api_url';
-const DEFAULT_API_URL = 'https://hfr-alex-font-v2.loca.lt';
+const DEFAULT_API_URL = 'https://sierra-merely-glen-translations.trycloudflare.com';
 
 /**
  * Получить текущий API URL.
