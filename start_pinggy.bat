@@ -21,7 +21,7 @@ echo [1/2] Запуск FastAPI backend на порту 8000...
 start "HFR-Backend" cmd /k "cd /d %~dp0 && %PY_CMD% -m uvicorn backend.main:app --host 0.0.0.0 --port 8000"
 
 echo       Ожидание загрузки backend (5 сек)...
-timeout /t 5 /nobreak >nul
+ping 127.0.0.1 -n 6 >nul
 
 REM 2. Запуск Pinggy с авто-рестартом
 echo [2/2] Запуск стабильного туннеля (Pinggy)...
@@ -36,5 +36,5 @@ REM Используем пользователя 'qr' для автоматич
 ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=30 -p 443 -R 80:localhost:8000 qr@a.pinggy.io
 echo.
 echo [%time%] ВНИМАНИЕ: Соединение прервано! Перезапуск через 5 секунд...
-timeout /t 5
+ping 127.0.0.1 -n 6 >nul
 goto restart_tunnel

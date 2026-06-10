@@ -25,7 +25,7 @@ start "HFR-Backend" cmd /k "cd /d %~dp0 && %PY_CMD% -m uvicorn backend.main:app 
 
 REM Ждём 5 секунд, чтобы backend успел загрузить модель
 echo       Ожидание загрузки ML-модели (5 сек)...
-timeout /t 5 /nobreak >nul
+ping 127.0.0.1 -n 6 >nul
 
 REM 2. Запуск Cloudflare Tunnel
 echo [2/2] Запуск Cloudflare Tunnel...

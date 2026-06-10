@@ -36,7 +36,7 @@ if %retry_count% gtr 30 (
     pause
     exit /b 1
 )
-timeout /t 2 /nobreak >nul
+ping 127.0.0.1 -n 3 >nul
 curl -s http://localhost:8000/api/health | findstr "ok" >nul
 if %errorlevel% neq 0 (
     echo     . . . API еще не отвечает (попытка %retry_count%/30)
