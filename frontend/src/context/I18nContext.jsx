@@ -34,8 +34,8 @@ const dictionaries = {
     nav_library: "LIBRARY",
 
     // Sidebar
-    ai_font_engine: "AI FONT ENGINE",
-    toolbox_title: "TOOLBOX",
+    ai_font_engine: "ИИ ДВИЖОК ШРИФТОВ",
+    toolbox_title: "ИНСТРУМЕНТЫ",
     tab_upload: "Загрузка",
     tab_preview: "Превью",
     tab_segments: "Сегменты",
@@ -56,7 +56,7 @@ const dictionaries = {
     status_bar_api: "API: АКТИВЕН",
 
     // Upload
-    brand_subtitle: "Поиск кириллических аналогов",
+    brand_subtitle: "МГНОВЕННЫЙ ОТБОР СООТВЕТСТВИЙ ТИПОГРАФИКИ",
     upload_section_title: "Загрузите изображение",
     drop_reference_font: "Загрузите референс",
     drop_reference_hint: "SVG, TTF, OTF или Изображение",
@@ -182,7 +182,7 @@ const dictionaries = {
     status_bar_api: "API: ACTIVE",
 
     // Upload
-    brand_subtitle: "Search Cyrillic analogues by Latin sample",
+    brand_subtitle: "INSTANT SELECTION OF TYPOGRAPHY MATCHES",
     upload_section_title: "Upload image",
     drop_reference_font: "Drop Reference Font",
     drop_reference_hint: "SVG, TTF, OTF or Image",

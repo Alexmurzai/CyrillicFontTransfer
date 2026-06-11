@@ -29,44 +29,28 @@
 }
 
 .header-brand {
-  font-family: var(--font-headline);
+  font-family: 'Calvino-Grande-Black', var(--font-headline);
   font-size: 48px;
-  font-weight: 700;
+  font-weight: normal;
   color: var(--on-surface);
   letter-spacing: -0.03em;
   line-height: 1;
 }
 
-/* Navigation Links */
-.header-nav {
-  display: flex;
-  gap: var(--sp-8);
-  align-items: center;
-  height: 100%;
-}
-
-.header-nav__link {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  font-family: var(--font-mono);
+/* Centered Brand Subtitle (abbreviation decode) */
+.header-title-centered {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Stratos-Light', var(--font-body);
   font-size: var(--text-ui-label);
-  font-weight: 500;
-  letter-spacing: 0.05em;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   color: var(--on-surface-variant);
-  transition: color var(--duration-normal) var(--ease);
-  border-bottom: 2px solid transparent;
-  padding-bottom: 2px;
-}
-
-.header-nav__link:hover {
-  color: var(--secondary-fixed-dim);
-}
-
-.header-nav__link--active {
-  color: var(--primary);
-  font-weight: 700;
-  border-bottom-color: var(--primary);
+  pointer-events: none;
+  white-space: nowrap;
 }
 
 /* Header Actions */

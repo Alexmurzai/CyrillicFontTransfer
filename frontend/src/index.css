@@ -6,6 +6,20 @@
 /* ── Google Fonts ── */
 @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&family=Work+Sans:wght@400;500&display=swap');
 
+@font-face {
+  font-family: 'Calvino-Grande-Black';
+  src: url('/fonts/Calvino-Grande-Black-trial.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Stratos-Light';
+  src: url('/fonts/Stratos-Light.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* ── Reset ── */
 *, *::before, *::after {
   margin: 0;
@@ -101,7 +115,7 @@ input, textarea {
   --surface-container-high: #2a2a2b;
   --surface-container-highest: #353436;
   --surface-variant: #353436;
-  --surface-glass: rgba(20, 20, 22, 0.75);
+  --surface-glass: rgba(20, 20, 22, 0.5);
 
   /* Primary */
   --primary: #c4c0ff;
@@ -153,7 +167,7 @@ input, textarea {
   --cat-unknown: #918fa1;
 
   /* Typography */
-  --font-headline: 'Epilogue', sans-serif;
+  --font-headline: 'Calvino-Grande-Black', 'Epilogue', sans-serif;
   --font-body: 'Work Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
@@ -205,7 +219,7 @@ input, textarea {
   --duration-slow: 350ms;
 
   /* Sidebar */
-  --sidebar-width: 320px;
+  --sidebar-width: 430px;
   --header-height: 96px;
   --footer-height: 40px;
 }

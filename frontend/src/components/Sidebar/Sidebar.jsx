@@ -182,31 +182,33 @@ export default function Sidebar({
       <div className="divider" />
 
       {/* API Settings */}
-      <div className="sidebar__section sidebar__section--settings">
-        <button
-          className={`settings-toggle ${showSettings ? 'settings-toggle--active' : ''}`}
-          onClick={() => setShowSettings(!showSettings)}
-          title={t('api_settings')}
-        >
-          <Settings size={14} />
-          <span>{t('api_settings')}</span>
-        </button>
+      {(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && (
+        <div className="sidebar__section sidebar__section--settings">
+          <button
+            className={`settings-toggle ${showSettings ? 'settings-toggle--active' : ''}`}
+            onClick={() => setShowSettings(!showSettings)}
+            title={t('api_settings')}
+          >
+            <Settings size={14} />
+            <span>{t('api_settings')}</span>
+          </button>
 
-        {showSettings && (
-          <div className="settings-panel">
-            <p className="settings-panel__hint">
-              {t('api_settings_hint')}
-            </p>
-            <input
-              type="text"
-              className="text-input text-input--small"
-              value={apiUrl}
-              onChange={(e) => handleApiUrlChange(e.target.value)}
-              placeholder="https://xxx.trycloudflare.com"
-            />
-          </div>
-        )}
-      </div>
+          {showSettings && (
+            <div className="settings-panel">
+              <p className="settings-panel__hint">
+                {t('api_settings_hint')}
+              </p>
+              <input
+                type="text"
+                className="text-input text-input--small"
+                value={apiUrl}
+                onChange={(e) => handleApiUrlChange(e.target.value)}
+                placeholder="https://xxx.trycloudflare.com"
+              />
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Footer */}
       <div className="sidebar-footer">

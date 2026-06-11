@@ -60,18 +60,9 @@ export default function App() {
       <header className="app-header">
         <div className="header-brand">MOCT</div>
 
-        {/* Navigation */}
-        <nav className="header-nav">
-          <a className="header-nav__link header-nav__link--active" href="#">
-            {t('nav_match')}
-          </a>
-          <a className="header-nav__link" href="#">
-            {t('nav_generator')}
-          </a>
-          <a className="header-nav__link" href="#">
-            {t('nav_library')}
-          </a>
-        </nav>
+        <div className="header-title-centered">
+          {t('brand_subtitle')}
+        </div>
 
         {/* Actions */}
         <div className="header-actions">
@@ -160,7 +151,7 @@ export default function App() {
       {/* ── Fixed Footer Status Bar ── */}
       <footer className="app-footer">
         <div className="footer-left">
-          © 2024 MOCT AI Engine
+          © 2026 MOCT AI Engine
         </div>
         <div className="footer-right">
           <span className={`footer-status ${isOnline ? 'footer-status--connected' : 'footer-status--info'}`}>
