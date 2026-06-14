@@ -67,13 +67,15 @@ echo.
 echo [OK] Tunnel created successfully: %TUNNEL_URL%
 echo [OK] Public URL has been copied to your Windows Clipboard!
 echo.
+echo.
 echo [3/3] Opening GitHub Pages site...
-start https://alexmurzai.github.io/CyrillicFontTransfer/
+start "" "https://alexmurzai.github.io/CyrillicFontTransfer/?api_url=%TUNNEL_URL%"
 echo.
 echo ==========================================================
 echo  INSTRUCTIONS:
-echo  1. On the web page, click API Settings gear icon, bottom-left.
-echo  2. Paste the copied URL from clipboard - press Ctrl+V.
+echo  1. The browser has opened the site with the API URL configured automatically.
+echo  2. (Backup) If needed, you can click the API Settings gear icon
+echo     (bottom-left) and paste the URL (Ctrl+V) manually.
 echo  3. The website will connect to your local RTX 3090 GPU!
 echo ==========================================================
 echo.

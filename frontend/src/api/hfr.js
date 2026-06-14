@@ -12,6 +12,35 @@ const DEFAULT_API_URL = 'https://sierra-merely-glen-translations.trycloudflare.c
  */
 export function getApiUrl() {
   if (typeof window !== 'undefined') {
+    // Check search and hash for api_url
+    let queryApiUrl = null;
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.has('api_url')) {
+      queryApiUrl = searchParams.get('api_url');
+    } else {
+      const hashParts = window.location.hash.split('?');
+      if (hashParts.length > 1) {
+        const hashParams = new URLSearchParams(hashParts[1]);
+        if (hashParams.has('api_url')) {
+          queryApiUrl = hashParams.get('api_url');
+        }
+      }
+    }
+
+    if (queryApiUrl) {
+      localStorage.setItem(STORAGE_KEY, queryApiUrl.replace(/\/+$/, ''));
+      // Clean query parameter from URL
+      try {
+        const cleanSearch = window.location.search.replace(/[?&]api_url=[^&]*/, '').replace(/^&/, '?').replace(/\?$/, '');
+        const cleanHash = window.location.hash.replace(/[?&]api_url=[^&]*/, '').replace(/^&/, '?').replace(/\?$/, '');
+        const newUrl = window.location.pathname + cleanSearch + cleanHash;
+        window.history.replaceState({}, '', newUrl);
+      } catch (e) {
+        console.error('Failed to clean URL', e);
+      }
+      return queryApiUrl.replace(/\/+$/, '');
+    }
+
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) return stored.replace(/\/+$/, '');
   }
