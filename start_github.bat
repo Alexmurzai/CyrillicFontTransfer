@@ -67,20 +67,39 @@ echo.
 echo [OK] Tunnel created successfully: %TUNNEL_URL%
 echo [OK] Public URL has been copied to your Windows Clipboard!
 echo.
-echo.
+
+REM Build the mobile-friendly URL
+set GITHUB_URL=https://alexmurzai.github.io/CyrillicFontTransfer/?api_url=%TUNNEL_URL%
+
+REM 4. Open desktop browser
 echo [3/3] Opening GitHub Pages site...
-start "" "https://alexmurzai.github.io/CyrillicFontTransfer/?api_url=%TUNNEL_URL%"
+start "" "%GITHUB_URL%"
+
 echo.
 echo ==========================================================
-echo  INSTRUCTIONS:
-echo  1. The browser has opened the site with the API URL configured automatically.
-echo  2. (Backup) If needed, you can click the API Settings gear icon
-echo     (bottom-left) and paste the URL (Ctrl+V) manually.
-echo  3. The website will connect to your local RTX 3090 GPU!
+echo.
+echo  DESKTOP: Browser opened automatically.
+echo.
+echo  MOBILE:  Open this link on your phone:
+echo.
+echo  %GITHUB_URL%
+echo.
 echo ==========================================================
 echo.
+
+REM 5. Generate QR code for mobile (if Python available)
+echo Generating QR code for mobile access...
+%PY_CMD% -c "import sys; exec(\"try:\\n    import qrcode\\n    qr = qrcode.QRCode(version=1, box_size=1, border=1)\\n    qr.add_data(sys.argv[1])\\n    qr.make(fit=True)\\n    qr.print_ascii(invert=True)\\n    print()\\n    print('  Scan this QR code with your phone camera!')\\n    print()\\nexcept ImportError:\\n    print('  [TIP] Install qrcode for QR: pip install qrcode')\\n    print('  For now, copy the URL above manually.')\\n    print()\")" "%GITHUB_URL%" 2>nul
+
+echo.
+echo  Also works: open any browser on phone and go to
+echo  %TUNNEL_URL%
+echo  (this opens the API directly — useful for testing)
+echo.
+echo ==========================================================
 echo Keep this window open while using the website.
 echo To close the tunnel, press Ctrl+C here or close this window.
+echo ==========================================================
 echo.
 
 :loop
