@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react';
 import { Download } from 'lucide-react';
-import { downloadFont } from '../../api/hfr';
+import { downloadFont, getApiUrl } from '../../api/hfr';
 import { useI18n } from '../../context/I18nContext';
 import './FontCard.css';
 
@@ -25,6 +26,42 @@ export default function FontCard({ match, rank, scale = 1, style }) {
     font_category,
   } = match;
 
+  const [isFontLoaded, setIsFontLoaded] = useState(false);
+
+  useEffect(() => {
+    if (id === undefined || id === null) return;
+
+    const fontNameFamily = `font-family-match-${id}`;
+
+    // Check if the font has already been added to document.fonts
+    let alreadyExists = false;
+    document.fonts.forEach((face) => {
+      if (face.family === fontNameFamily) {
+        alreadyExists = true;
+      }
+    });
+
+    if (alreadyExists) {
+      setIsFontLoaded(true);
+      return;
+    }
+
+    const apiBase = getApiUrl();
+    const fontUrl = `${apiBase}/api/font/download/${id}`;
+
+    try {
+      const fontFace = new FontFace(fontNameFamily, `url(${fontUrl})`);
+      fontFace.load().then((loadedFace) => {
+        document.fonts.add(loadedFace);
+        setIsFontLoaded(true);
+      }).catch((err) => {
+        console.warn(`Failed to load font face ${font_name} from ${fontUrl}`, err);
+      });
+    } catch (e) {
+      console.warn("FontFace constructor failed", e);
+    }
+  }, [id, font_name]);
+
   const handleDownload = async (e) => {
     e.stopPropagation();
     try {
@@ -39,7 +76,13 @@ export default function FontCard({ match, rank, scale = 1, style }) {
       {/* Header: Name + Score + Download */}
       <div className="font-card__header">
         <div className="font-card__info">
-          <h3 className="font-card__name" title={font_name}>{font_name}</h3>
+          <h3 
+            className="font-card__name" 
+            title={font_name}
+            style={{ fontFamily: isFontLoaded ? `'font-family-match-${id}', var(--font-headline), sans-serif` : 'inherit' }}
+          >
+            {font_name}
+          </h3>
           <div className="font-card__score-line">
             <span className="font-card__rank">#{rank}</span>
             <span className={`font-card__category font-card__category--${font_category}`}>
