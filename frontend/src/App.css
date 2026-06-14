@@ -179,7 +179,6 @@
   overflow: hidden;
   position: relative;
   margin-left: var(--sidebar-width);
-  padding-top: calc(var(--header-height) + 60px); /* header + marquee */
 }
 
 /* ── Loading Overlay ── */
@@ -219,6 +218,7 @@
   flex: 1;
   overflow-y: auto;
   padding: var(--gutter);
+  padding-top: calc(var(--header-height) + 60px + var(--gutter)); /* header + marquee + spacing */
   padding-bottom: calc(var(--footer-height) + var(--sp-8));
 }
 
@@ -346,8 +346,11 @@
   }
   .app {
     margin-left: 0;
-    padding-top: calc(64px + 48px);
+    padding-top: 0;
     flex-direction: column;
+  }
+  .feed {
+    padding-top: calc(64px + 48px + var(--gutter));
   }
   .app-footer {
     display: none;

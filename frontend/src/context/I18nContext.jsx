@@ -182,7 +182,7 @@ const dictionaries = {
     status_bar_api: "API: ACTIVE",
 
     // Upload
-    brand_subtitle: "INSTANT SELECTION OF TYPOGRAPHY MATCHES",
+    brand_subtitle: "MATCHING OF CYRILLIC TYPEFACES",
     upload_section_title: "Upload image",
     drop_reference_font: "Drop Reference Font",
     drop_reference_hint: "SVG, TTF, OTF or Image",
