@@ -11,6 +11,7 @@
   src: url('/fonts/Calvino-Grande-Black-trial.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  unicode-range: U+0000-002F, U+003A-007F, U+0400-04FF;
 }
 
 @font-face {
