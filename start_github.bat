@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 title HFR MOCT - GitHub Launcher
 echo.
 echo ==========================================
@@ -87,14 +88,12 @@ echo.
 echo ==========================================================
 echo.
 
-REM 5. Generate QR code for mobile (if Python available)
+REM 5. Generate QR code for mobile (if Python qrcode available)
 echo Generating QR code for mobile access...
-%PY_CMD% -c "import sys; exec(\"try:\\n    import qrcode\\n    qr = qrcode.QRCode(version=1, box_size=1, border=1)\\n    qr.add_data(sys.argv[1])\\n    qr.make(fit=True)\\n    qr.print_ascii(invert=True)\\n    print()\\n    print('  Scan this QR code with your phone camera!')\\n    print()\\nexcept ImportError:\\n    print('  [TIP] Install qrcode for QR: pip install qrcode')\\n    print('  For now, copy the URL above manually.')\\n    print()\")" "%GITHUB_URL%" 2>nul
+%PY_CMD% scripts\show_qr.py "%GITHUB_URL%"
 
 echo.
-echo  Also works: open any browser on phone and go to
-echo  %TUNNEL_URL%
-echo  (this opens the API directly — useful for testing)
+echo  Or open directly on phone: %TUNNEL_URL%
 echo.
 echo ==========================================================
 echo Keep this window open while using the website.
