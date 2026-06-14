@@ -28,7 +28,8 @@ export default function PricingModal() {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
-          'Bypass-Tunnel-Reminder': 'true'
+          'Bypass-Tunnel-Reminder': 'true',
+          'X-Pinggy-No-Screen': 'true'
         },
         body: JSON.stringify({
           user_id: user?.id || 1, // fallback for mock
@@ -42,7 +43,7 @@ export default function PricingModal() {
       if (data.payment_url) {
         await fetch(`${apiBase}/api/payments/mock-webhook?user_id=${user?.id || 1}&package_id=${pkg.id}`, { 
           method: 'POST',
-          headers: { 'Bypass-Tunnel-Reminder': 'true' }
+          headers: { 'Bypass-Tunnel-Reminder': 'true', 'X-Pinggy-No-Screen': 'true' }
         });
         alert(t('payment_success'));
         window.location.reload();

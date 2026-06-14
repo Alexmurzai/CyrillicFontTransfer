@@ -52,7 +52,8 @@ export default function FontCard({ match, rank, scale = 1, style }) {
 
     fetch(fontUrl, {
       headers: {
-        'Bypass-Tunnel-Reminder': 'true'
+        'Bypass-Tunnel-Reminder': 'true',
+        'X-Pinggy-No-Screen': 'true'
       }
     })
       .then((res) => {

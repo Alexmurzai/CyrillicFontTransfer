@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem('hfr_token', token);
       const apiBase = getApiUrl();
       fetch(`${apiBase}/api/auth/me?token=${token}`, {
-        headers: { 'Bypass-Tunnel-Reminder': 'true' }
+        headers: { 'Bypass-Tunnel-Reminder': 'true', 'X-Pinggy-No-Screen': 'true' }
       })
         .then(res => {
           if (!res.ok) throw new Error('Invalid token');
@@ -50,7 +50,8 @@ export function AuthProvider({ children }) {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        'Bypass-Tunnel-Reminder': 'true'
+        'Bypass-Tunnel-Reminder': 'true',
+        'X-Pinggy-No-Screen': 'true'
       },
       body: JSON.stringify({ email, password })
     });
@@ -69,7 +70,8 @@ export function AuthProvider({ children }) {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        'Bypass-Tunnel-Reminder': 'true'
+        'Bypass-Tunnel-Reminder': 'true',
+        'X-Pinggy-No-Screen': 'true'
       },
       body: JSON.stringify({ email, password })
     });
