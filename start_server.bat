@@ -33,7 +33,7 @@ echo       Публичный URL появится ниже:
 echo.
 
 set GODEBUG=netdns=go
-cloudflared.exe tunnel --url http://localhost:8000 --protocol http2 --edge-ip-version 4
+cloudflared.exe tunnel --url http://127.0.0.1:8000 --protocol http2 --edge-ip-version 4
 
 echo.
 echo Туннель закрыт. Не забудьте закрыть окно backend.

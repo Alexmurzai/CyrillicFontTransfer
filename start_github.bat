@@ -33,7 +33,7 @@ REM 3. Start Cloudflare Tunnel
 echo [2/3] Starting Cloudflare Tunnel...
 set LOG_FILE=%temp%\cloudflared.log
 del /f /q "%LOG_FILE%" >nul 2>nul
-start /b "" cloudflared.exe tunnel --url http://localhost:8000 --protocol http2 --edge-ip-version 4 > "%LOG_FILE%" 2>&1
+start /b "" cloudflared.exe tunnel --url http://127.0.0.1:8000 --protocol http2 --edge-ip-version 4 > "%LOG_FILE%" 2>&1
 
 echo Waiting for tunnel connection and URL generation...
 
