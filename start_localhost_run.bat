@@ -1,10 +1,10 @@
 @echo off
 setlocal enabledelayedexpansion
-title HFR MOCT - LocalTunnel Launcher
+title HFR MOCT - Localhost.run Launcher
 echo.
 echo ==========================================================
 echo       MOCT Cyrillic Font Matcher
-echo      LocalTunnel (loca.lt) Launcher
+echo      Localhost.run (SSH) Launcher
 echo ==========================================================
 echo.
 
@@ -16,14 +16,11 @@ if %errorlevel% neq 0 (
     set PY_CMD=python
 )
 
-REM 0. Check Node.js/npx availability
-where npx >nul 2>nul
+REM 0. Check SSH availability
+where ssh >nul 2>nul
 if %errorlevel% neq 0 (
-    echo [ERROR] Node.js/npm is not installed on this PC.
-    echo LocalTunnel requires Node.js to run.
-    echo.
-    echo Please use the alternative tunnel instead:
-    echo Run the script start_localhost_run.bat which does not require Node.js.
+    echo [ERROR] SSH client not found in your system.
+    echo Please use start_localtunnel.bat instead.
     echo.
     pause
     exit /b
@@ -40,17 +37,17 @@ if %errorlevel% equ 0 (
     ping 127.0.0.1 -n 6 >nul
 )
 
-REM 2. Start LocalTunnel in the background
-echo [2/3] Starting LocalTunnel...
-set LOG_FILE=%temp%\localtunnel.log
+REM 2. Start SSH tunnel in the background
+echo [2/3] Starting SSH Tunnel via localhost.run...
+set LOG_FILE=%temp%\localhost_run.log
 del /f /q "%LOG_FILE%" >nul 2>nul
 
-start /b "" npx -y localtunnel --port 8000 --subdomain hfr-alex-font-v2 > "%LOG_FILE%" 2>&1
+start /b "" ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=10 -R 80:localhost:8000 localhost.run > "%LOG_FILE%" 2>&1
 
 echo Waiting for tunnel URL generation...
 
 REM Use PowerShell to extract the URL
-set PS_CMD=PowerShell -NoProfile -ExecutionPolicy Bypass -Command "$url = ''; for ($i=0; $i -lt 15; $i++) { Start-Sleep -Seconds 1; if (Test-Path '%LOG_FILE%') { $c = Get-Content '%LOG_FILE%' -Raw; if ($c -match 'https://[a-zA-Z0-9\-]+\.loca\.lt') { $url = $matches[0]; break; } } }; if ($url) { Write-Output $url; } else { Write-Output 'FAIL'; }"
+set PS_CMD=PowerShell -NoProfile -ExecutionPolicy Bypass -Command "$url = ''; for ($i=0; $i -lt 15; $i++) { Start-Sleep -Seconds 1; if (Test-Path '%LOG_FILE%') { $c = Get-Content '%LOG_FILE%' -Raw; if ($c -match 'https://[a-zA-Z0-9\-]+\.lhr\.life') { $url = $matches[0]; break; } } }; if ($url) { Write-Output $url; } else { Write-Output 'FAIL'; }"
 
 for /f "usebackq tokens=*" %%a in (`%PS_CMD%`) do (
     set TUNNEL_URL=%%a
@@ -58,7 +55,7 @@ for /f "usebackq tokens=*" %%a in (`%PS_CMD%`) do (
 
 if "%TUNNEL_URL%"=="FAIL" (
     echo.
-    echo [ERROR] Failed to obtain LocalTunnel URL.
+    echo [ERROR] Failed to establish localhost.run tunnel.
     echo Log output:
     type "%LOG_FILE%"
     echo.
@@ -67,7 +64,7 @@ if "%TUNNEL_URL%"=="FAIL" (
 )
 if not defined TUNNEL_URL (
     echo.
-    echo [ERROR] Timeout waiting for LocalTunnel URL.
+    echo [ERROR] Timeout waiting for localhost.run URL.
     echo Log output:
     type "%LOG_FILE%"
     echo.
@@ -115,4 +112,9 @@ echo.
 
 :loop
 ping 127.0.0.1 -n 5 >nul
-goto loop
+tasklist /fi "imagename eq ssh.exe" | findstr ssh.exe >nul
+if %errorlevel% equ 0 goto loop
+
+echo.
+echo [WARNING] SSH tunnel has stopped!
+pause
