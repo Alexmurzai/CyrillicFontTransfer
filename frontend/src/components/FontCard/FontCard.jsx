@@ -48,18 +48,34 @@ export default function FontCard({ match, rank, scale = 1, style }) {
 
     const apiBase = getApiUrl();
     const fontUrl = `${apiBase}/api/font/download/${id}`;
+    let isMounted = true;
 
-    try {
-      const fontFace = new FontFace(fontNameFamily, `url(${fontUrl})`);
-      fontFace.load().then((loadedFace) => {
+    fetch(fontUrl, {
+      headers: {
+        'Bypass-Tunnel-Reminder': 'true'
+      }
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+        return res.arrayBuffer();
+      })
+      .then((buffer) => {
+        if (!isMounted) return;
+        const fontFace = new FontFace(fontNameFamily, buffer);
+        return fontFace.load();
+      })
+      .then((loadedFace) => {
+        if (!loadedFace || !isMounted) return;
         document.fonts.add(loadedFace);
         setIsFontLoaded(true);
-      }).catch((err) => {
-        console.warn(`Failed to load font face ${font_name} from ${fontUrl}`, err);
+      })
+      .catch((err) => {
+        console.warn(`Failed to fetch and load font face ${font_name} from ${fontUrl}:`, err);
       });
-    } catch (e) {
-      console.warn("FontFace constructor failed", e);
-    }
+
+    return () => {
+      isMounted = false;
+    };
   }, [id, font_name]);
 
   const handleDownload = async (e) => {
