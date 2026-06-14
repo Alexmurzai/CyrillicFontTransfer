@@ -60,7 +60,7 @@ export function AuthProvider({ children }) {
     }
     const data = await res.json();
     setToken(data.access_token);
-    setUser({ balance: data.balance, subscription_end: data.subscription_end });
+    setUser({ email, balance: data.balance, subscription_end: data.subscription_end });
   };
 
   const register = async (email, password) => {
@@ -79,7 +79,7 @@ export function AuthProvider({ children }) {
     }
     const data = await res.json();
     setToken(data.access_token);
-    setUser({ balance: data.balance, subscription_end: data.subscription_end });
+    setUser({ email, balance: data.balance, subscription_end: data.subscription_end });
   };
 
   const logout = () => {

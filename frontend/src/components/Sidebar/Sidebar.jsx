@@ -2,6 +2,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { Settings, Search } from 'lucide-react';
 import { getApiUrl, setApiUrl } from '../../api/hfr';
 import { useI18n } from '../../context/I18nContext';
+import { useAuth } from '../../context/AuthContext';
 import ImageUploader from '../ImageUploader/ImageUploader';
 import SegmentationGallery from '../SegmentationGallery/SegmentationGallery';
 import Slider from '../Slider/Slider';
@@ -16,6 +17,7 @@ export default function Sidebar({
   health,
 }) {
   const { t } = useI18n();
+  const { user } = useAuth();
   const getLocalizedError = useCallback((errStr) => {
     if (!errStr) return '';
     
@@ -182,7 +184,13 @@ export default function Sidebar({
       <div className="divider" />
 
       {/* API Settings */}
-      {(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && (
+      {(window.location.hostname === 'localhost' || 
+        window.location.hostname === '127.0.0.1' || 
+        (user && (
+          user.email === 'arhalexxx@gmail.com' || 
+          user.email === 'test@example.com' || 
+          user.email?.toLowerCase().includes('admin')
+        ))) && (
         <div className="sidebar__section sidebar__section--settings">
           <button
             className={`settings-toggle ${showSettings ? 'settings-toggle--active' : ''}`}

@@ -16,7 +16,7 @@ if %errorlevel% neq 0 (
 )
 
 REM 1. Check and start FastAPI Backend
-netstat -ano | findstr :8000 >nul
+netstat -ano | findstr ":8000" | findstr "LISTENING" >nul
 if %errorlevel% equ 0 (
     echo [OK] Backend is already running on port 8000.
 ) else (
