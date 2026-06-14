@@ -154,3 +154,30 @@
 .btn-toggle-password:hover {
   color: var(--primary);
 }
+
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+  .modal-content {
+    max-width: calc(100% - 32px);
+    margin: var(--sp-4);
+    padding: var(--sp-6);
+    border-radius: var(--radius-xl);
+  }
+  .modal-content h2 {
+    font-size: 24px;
+    margin-bottom: var(--sp-4);
+  }
+  .auth-form input {
+    padding: var(--sp-4);
+    font-size: 16px; /* prevents zoom on iOS */
+    min-height: 48px;
+  }
+  .btn-primary {
+    min-height: 52px;
+    font-size: 14px;
+  }
+  .btn-text {
+    font-size: 14px;
+    padding: var(--sp-3) 0;
+  }
+}

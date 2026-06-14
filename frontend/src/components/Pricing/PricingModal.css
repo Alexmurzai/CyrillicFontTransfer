@@ -75,3 +75,35 @@
 .pricing-card button {
   width: 100%;
 }
+
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+  .pricing-modal {
+    max-width: calc(100% - 32px);
+    margin: var(--sp-4);
+    max-height: 85vh;
+    max-height: 85dvh;
+    overflow-y: auto;
+    padding: var(--sp-6);
+  }
+  .pricing-modal h2 {
+    font-size: 22px;
+  }
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-4);
+  }
+  .pricing-card {
+    padding: var(--sp-5);
+  }
+  .pricing-card .price {
+    font-size: 28px;
+    margin: var(--sp-3) 0;
+  }
+  .pricing-card h3 {
+    font-size: 18px;
+  }
+  .pricing-card .desc {
+    font-size: 14px;
+  }
+}

@@ -202,3 +202,42 @@
   max-width: 300px;
   flex: 1;
 }
+
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+  .font-card {
+    border-radius: var(--radius-xl);
+  }
+  .font-card__header {
+    flex-direction: column;
+    padding: var(--sp-4);
+    padding-bottom: 0;
+    gap: var(--sp-3);
+  }
+  .font-card__name {
+    font-size: 20px;
+  }
+  .font-card__score-line {
+    flex-wrap: wrap;
+    gap: var(--sp-1);
+  }
+  .font-card__score {
+    font-size: 12px;
+  }
+  .font-card__download {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+    border-radius: var(--radius-md);
+  }
+  .font-card__preview {
+    padding: var(--sp-3) var(--sp-4);
+    min-height: 70px;
+  }
+  .font-card__preview img {
+    max-height: 100px;
+  }
+  .font-card__path-row {
+    display: none;
+  }
+}

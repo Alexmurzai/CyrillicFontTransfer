@@ -111,6 +111,14 @@ const dictionaries = {
     auth_switch_to_login: "Уже есть аккаунт? Войти",
     auth_switch_to_register: "Нет аккаунта? Зарегистрироваться",
 
+    // Mobile
+    mobile_settings: "Настройки",
+    mobile_segments: "Сегменты",
+    mobile_filters: "Фильтры",
+    mobile_empty_subtitle: "Загрузите скриншот с латинским текстом — нейросеть подберёт кириллические аналоги",
+    mobile_free_tries: "{remaining} из 5 бесплатно",
+    mobile_free_tries_used: "Лимит исчерпан",
+
     // Additional
     of: "из",
     loading_analyzing: "Нейросеть анализирует изображение...",
@@ -236,6 +244,14 @@ const dictionaries = {
     // Auth
     auth_switch_to_login: "Already have an account? Log in",
     auth_switch_to_register: "Need an account? Sign up",
+
+    // Mobile
+    mobile_settings: "Settings",
+    mobile_segments: "Segments",
+    mobile_filters: "Filters",
+    mobile_empty_subtitle: "Upload a screenshot with Latin text — AI will find matching Cyrillic fonts",
+    mobile_free_tries: "{remaining} of 5 free",
+    mobile_free_tries_used: "Limit reached",
 
     // Additional
     of: "of",

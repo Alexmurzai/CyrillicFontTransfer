@@ -86,3 +86,27 @@
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-xl);
 }
+
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+  .seg-gallery {
+    gap: var(--sp-2);
+  }
+  .seg-gallery__item {
+    width: 48px;
+    height: 48px;
+  }
+  .seg-gallery__header {
+    margin-bottom: var(--sp-3);
+  }
+  .seg-gallery__label {
+    font-size: 12px;
+  }
+  .seg-gallery__count {
+    font-size: 10px;
+  }
+  .seg-gallery__empty {
+    padding: var(--sp-4);
+    border-radius: var(--radius-lg);
+  }
+}

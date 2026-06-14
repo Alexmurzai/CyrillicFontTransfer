@@ -136,3 +136,28 @@
 .uploader__input {
   display: none;
 }
+
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+  .uploader {
+    min-height: 140px;
+    border-radius: var(--radius-lg);
+  }
+  .uploader__empty {
+    padding: var(--sp-5);
+    gap: var(--sp-3);
+  }
+  .uploader__text {
+    font-size: 15px;
+    max-width: 200px;
+  }
+  .uploader__icons {
+    gap: var(--sp-3);
+  }
+  .uploader__badge--paste {
+    display: none;
+  }
+  .uploader__preview {
+    max-height: 200px;
+  }
+}

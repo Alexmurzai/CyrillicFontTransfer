@@ -51,6 +51,22 @@ body {
   isolation: isolate;
 }
 
+@media (max-width: 768px) {
+  body {
+    overflow: auto;
+    overflow-x: hidden;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  #root {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+}
+
 /* ── Fixed Background Image (lowest layer) ── */
 #root::before {
   content: "";
@@ -223,6 +239,10 @@ input, textarea {
   --sidebar-width: 430px;
   --header-height: 96px;
   --footer-height: 40px;
+
+  /* Mobile */
+  --header-height-mobile: 56px;
+  --bottom-nav-height: 56px;
 }
 
 /* ── Scrollbar ── */
