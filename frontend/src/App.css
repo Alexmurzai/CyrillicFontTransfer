@@ -179,6 +179,7 @@
   overflow: hidden;
   position: relative;
   margin-left: var(--sidebar-width);
+  padding-top: calc(var(--header-height) + 60px); /* header + marquee */
 }
 
 /* ── Loading Overlay ── */
@@ -218,8 +219,7 @@
   flex: 1;
   overflow-y: auto;
   padding: var(--gutter);
-  padding-top: calc(var(--header-height) + 60px + var(--gutter)); /* header + marquee + spacing */
-  padding-bottom: calc(var(--footer-height) + var(--sp-8));
+  padding-bottom: calc(var(--footer-height) + 80px); /* Pushes the 'Show more' button well above the footer status bar */
 }
 
 /* ── Empty State ── */
@@ -346,11 +346,11 @@
   }
   .app {
     margin-left: 0;
-    padding-top: 0;
+    padding-top: calc(64px + 48px);
     flex-direction: column;
   }
   .feed {
-    padding-top: calc(64px + 48px + var(--gutter));
+    padding-top: 0;
   }
   .app-footer {
     display: none;
