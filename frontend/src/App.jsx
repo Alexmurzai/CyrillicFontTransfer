@@ -35,7 +35,7 @@ export default function App() {
 
   const {
     matches, charImages, total, visibleCount, health,
-    isLoading, isUpdating, error, recognize, showMore, updatePreview,
+    isLoading, isUpdating, error, recognize, showMore, updatePreview, clear,
   } = useRecognition();
 
   const [activeCategory, setActiveCategory] = useState('all');
@@ -50,6 +50,13 @@ export default function App() {
   const [letterSpacing, setLetterSpacing] = useState(0);
   const [wordSpacing, setWordSpacing] = useState(20);
   const [category, setCategory] = useState('all');
+
+  const handleImageSelect = useCallback((file) => {
+    setImageFile(file);
+    if (!file) {
+      clear();
+    }
+  }, [clear]);
 
   // Intercept limit errors
   useEffect(() => {
@@ -151,6 +158,7 @@ export default function App() {
         <Sidebar
           onRecognize={handleRecognize}
           onPreviewUpdate={handlePreviewUpdate}
+          onClear={clear}
           charImages={charImages}
           isLoading={isLoading}
           error={isLimitError ? null : error}
@@ -180,33 +188,34 @@ export default function App() {
 
         {/* ── Mobile: Inline Upload + Search ── */}
         {isMobile && (
-          <div className="mobile-upload-section">
-            <ImageUploader onImageSelect={setImageFile} disabled={isLoading} />
-            <button
-              className="mobile-search-btn"
-              onClick={handleMobileSearch}
-              disabled={!imageFile || isLoading}
-            >
-              <Search size={18} strokeWidth={2} />
-              {isLoading ? t('searching') : t('btn_find_matches')}
-            </button>
+          <div className={`mobile-upload-section ${hasResults ? 'mobile-upload-section--sticky' : ''}`}>
+            <ImageUploader onImageSelect={handleImageSelect} disabled={isLoading} />
+            {!hasResults && (
+              <button
+                className="mobile-search-btn"
+                onClick={handleMobileSearch}
+                disabled={!imageFile || isLoading}
+              >
+                <Search size={18} strokeWidth={2} />
+                {isLoading ? t('searching') : t('btn_find_matches')}
+              </button>
+            )}
 
             {/* Error */}
             {error && !isLimitError && (
               <div className="error-msg" style={{ margin: '0 0 8px 0' }}>{error}</div>
-            )}
-
-            {/* Compact segmentation preview */}
-            {charImages.length > 0 && (
-              <div className="mobile-segments-inline">
-                <SegmentationGallery images={charImages} />
-              </div>
             )}
           </div>
         )}
 
         {/* Feed */}
         <main className="feed" id="feed">
+          {isMobile && hasResults && charImages.length > 0 && (
+            <div className="mobile-feed-segments">
+              <SegmentationGallery images={charImages} />
+            </div>
+          )}
+
           {hasResults ? (
             <FontFeed
               matches={matches}

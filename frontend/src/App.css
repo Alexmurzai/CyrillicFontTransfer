@@ -404,6 +404,26 @@
     gap: var(--sp-3);
   }
 
+  .mobile-upload-section--sticky {
+    position: sticky;
+    top: var(--header-height-mobile, 56px);
+    z-index: 90;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border-glass);
+    padding: var(--sp-2) var(--sp-4);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    gap: 0;
+  }
+
+  .mobile-upload-section--sticky .uploader__preview {
+    max-height: 70px;
+  }
+
+  /* ── Mobile Feed Segments ── */
+  .mobile-feed-segments {
+    margin-bottom: var(--sp-4);
+  }
+
   .mobile-search-btn {
     width: 100%;
     padding: var(--sp-4);

@@ -11,6 +11,7 @@ import './Sidebar.css';
 export default function Sidebar({
   onRecognize,
   onPreviewUpdate,
+  onClear,
   charImages,
   isLoading,
   error,
@@ -62,6 +63,13 @@ export default function Sidebar({
   const [wordSpacing, setWordSpacing] = useState(20);
   const [category, setCategory] = useState('all');
   const [apiUrl, setApiUrlState] = useState(getApiUrl());
+
+  const handleImageSelect = useCallback((file) => {
+    setImageFile(file);
+    if (!file) {
+      onClear?.();
+    }
+  }, [onClear]);
   const [showSettings, setShowSettings] = useState(false);
   const prevSettingsRef = useRef(null);
 
@@ -111,7 +119,7 @@ export default function Sidebar({
 
       {/* Upload */}
       <div className="sidebar__section">
-        <ImageUploader onImageSelect={setImageFile} disabled={isLoading} />
+        <ImageUploader onImageSelect={handleImageSelect} disabled={isLoading} />
       </div>
 
       {/* Preview text */}

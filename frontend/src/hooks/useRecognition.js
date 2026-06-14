@@ -109,6 +109,15 @@ export function useRecognition() {
     }, 300);
   }, [matches, visibleCount]);
 
+  // Сброс результатов
+  const clear = useCallback(() => {
+    setMatches([]);
+    setCharImages([]);
+    setTotal(0);
+    setVisibleCount(5);
+    setError(null);
+  }, []);
+
   // Cleanup
   useEffect(() => {
     return () => {
@@ -135,5 +144,6 @@ export function useRecognition() {
     showMore,
     updatePreview,
     checkBackend,
+    clear,
   };
 }
