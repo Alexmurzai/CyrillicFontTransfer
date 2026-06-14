@@ -32,8 +32,8 @@ echo [2/3] Starting Pinggy SSH Tunnel...
 set LOG_FILE=%temp%\pinggy.log
 del /f /q "%LOG_FILE%" >nul 2>nul
 
-REM Run SSH in background with x:noscreenpage to bypass Pinggy interstitial page
-start /b "" ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=10 -p 443 -R 80:localhost:8000 x:noscreenpage@a.pinggy.io > "%LOG_FILE%" 2>&1
+REM Run SSH in background with x:passpreflight to forward CORS preflight requests to backend
+start /b "" ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=10 -p 443 -R 80:localhost:8000 x:passpreflight@a.pinggy.io > "%LOG_FILE%" 2>&1
 
 echo Waiting for tunnel connection and URL generation...
 
