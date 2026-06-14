@@ -19,8 +19,12 @@ if %errorlevel% neq 0 (
     set PY_CMD=python
 )
 
-REM 1. Запуск FastAPI backend
-echo [1/2] Запуск FastAPI backend на порту 8000...
+REM 1. Stop old backend instances and start FastAPI Backend
+echo [1/2] Checking and restarting Backend on port 8000...
+for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8000 ^| findstr LISTENING') do (
+    echo Stopping old backend process (PID %%a)...
+    taskkill /f /pid %%a >nul 2>nul
+)
 start "HFR-Backend" cmd /k "cd /d %~dp0 && %PY_CMD% -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload"
 
 REM Ждём 5 секунд, чтобы backend успел загрузить модель

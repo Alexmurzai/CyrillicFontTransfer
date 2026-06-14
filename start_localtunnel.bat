@@ -11,12 +11,11 @@ echo   HFR - Hierarchical Font Recognition Launcher
 echo ======================================================
 echo.
 
-:: 1. Проверка, не запущен ли уже сервер
-netstat -ano | findstr :8000 | findstr LISTENING >nul
-if %errorlevel% equ 0 (
-    echo [!] Порт 8000 уже занят. Возможно, бэкенд уже запущен.
-    echo     Пробую запустить туннель напрямую...
-    goto start_tunnel
+:: 1. Проверка и перезапуск бэкенда на порту 8000
+echo [*] Проверка и перезапуск бэкенда на порту 8000...
+for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8000 ^| findstr LISTENING') do (
+    echo Stopping old backend process (PID %%a)...
+    taskkill /f /pid %%a >nul 2>nul
 )
 
 :: 2. Запуск бэкенда в фоновом (минимизированном) окне

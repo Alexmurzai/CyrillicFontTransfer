@@ -86,6 +86,13 @@ def build_vector_db(model_path="models/hfr_model_best.pth", index_path="data/fon
     print(f"FAISS index saved to: data/font_signatures.faiss")
     print(f"Metadata saved to: data/font_metadata.json")
 
+    # Auto-update project counters
+    try:
+        from scripts.update_counters import update_project_counters
+        update_project_counters(len(metadata))
+    except Exception as e:
+        print(f"[!] Warning: failed to auto-update project counters: {e}")
+
 if __name__ == "__main__":
     device = "cuda" if torch.cuda.is_available() else "cpu"
     build_vector_db(device=device)
