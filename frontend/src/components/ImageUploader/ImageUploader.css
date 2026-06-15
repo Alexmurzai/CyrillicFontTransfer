@@ -125,6 +125,13 @@
   transition: all var(--duration-fast);
   z-index: 10;
   border: 1px solid var(--outline-variant);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.uploader:hover .uploader__remove {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .uploader__remove:hover {
