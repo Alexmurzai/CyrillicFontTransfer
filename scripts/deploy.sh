@@ -10,10 +10,12 @@ set -e
 
 echo "=== starting MOCT Deployment ==="
 
-# 1. Update system packages
-echo "[1/6] Updating system packages..."
+# 1. Update system packages and install Node.js 20
+echo "[1/6] Updating system packages & installing Node.js..."
 sudo apt update -y && sudo apt upgrade -y
-sudo apt install -y python3 python3-pip python3-venv sqlite3 git curl nginx
+sudo apt install -y curl
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y python3 python3-pip python3-venv sqlite3 git nodejs nginx
 
 # 2. Setup directory
 PROJECT_DIR="/var/www/CyrillicFontTransfer"
@@ -27,7 +29,7 @@ cd $PROJECT_DIR
 python3 -m venv venv
 source venv/bin/activate
 
-# 4. Install dependencies
+# 4. Install dependencies and build Frontend
 echo "[4/6] Installing dependencies..."
 pip install --upgrade pip
 # Install CPU version of PyTorch to save RAM/Disk and run fast on CPU
@@ -36,6 +38,12 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
 # Ensure uvicorn and watchfiles are installed
 pip install uvicorn gunicorn watchfiles
+
+echo "Building React frontend..."
+cd $PROJECT_DIR/frontend
+npm install
+npm run build
+cd $PROJECT_DIR
 
 # 5. Setup Systemd Service
 echo "[5/6] Generating Systemd service config..."
@@ -63,20 +71,28 @@ sudo systemctl daemon-reload
 sudo systemctl enable moct-backend
 sudo systemctl restart moct-backend
 
-# 6. Configure Nginx Reverse Proxy
-echo "[6/6] Configuring Nginx reverse proxy..."
+# 6. Configure Nginx Web Server & Reverse Proxy
+echo "[6/6] Configuring Nginx web server..."
 NGINX_CONF="/etc/nginx/sites-available/moct"
 
 sudo bash -c "cat > $NGINX_CONF" <<EOL
 server {
     listen 80;
-    server_name _; # Replace with your domain name later
+    server_name cyrfonts.online www.cyrfonts.online;
 
     # Max upload size for font images
     client_max_body_size 10M;
 
-    # API Proxy
+    # Static Frontend
+    root $PROJECT_DIR/frontend/dist;
+    index index.html;
+
     location / {
+        try_files \$uri \$uri/ /index.html;
+    }
+
+    # API Proxy
+    location /api {
         proxy_pass http://127.0.0.1:8000;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
