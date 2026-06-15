@@ -72,7 +72,7 @@ export default function FontFeed({
               label={t('scale')}
               value={scale}
               min={0.5}
-              max={2}
+              max={3}
               step={0.1}
               onChange={setScale}
               id="scale-slider"

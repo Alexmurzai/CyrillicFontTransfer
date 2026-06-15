@@ -11,6 +11,7 @@
   overflow: hidden;
   transition: all var(--duration-normal) var(--ease);
   position: relative;
+  --preview-base-height: 55px;
 }
 
 .font-card:hover {
@@ -168,17 +169,19 @@
 .font-card__preview {
   padding: var(--sp-4) var(--sp-5);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  min-height: 90px;
   display: flex;
   align-items: center;
   overflow: hidden;
+  transition: height var(--duration-normal) var(--ease);
+  height: calc(var(--preview-base-height) * var(--scale) + var(--sp-4) * 2);
 }
 
 .font-card__preview img {
   max-width: 100%;
-  height: auto;
-  max-height: 140px;
+  height: var(--preview-base-height);
+  width: auto;
   object-fit: contain;
+  transform-origin: left center;
   transition: transform var(--duration-normal) var(--ease);
   filter: invert(1) brightness(1.5);
 }
@@ -207,6 +210,7 @@
 @media (max-width: 768px) {
   .font-card {
     border-radius: var(--radius-xl);
+    --preview-base-height: 45px;
   }
   .font-card__header {
     flex-direction: column;
@@ -232,10 +236,7 @@
   }
   .font-card__preview {
     padding: var(--sp-3) var(--sp-4);
-    min-height: 70px;
-  }
-  .font-card__preview img {
-    max-height: 100px;
+    height: calc(var(--preview-base-height) * var(--scale) + var(--sp-3) * 2);
   }
   .font-card__path-row {
     display: none;

@@ -89,7 +89,7 @@ export default function FontCard({ match, rank, scale = 1, style }) {
   };
 
   return (
-    <div className="font-card fade-in" style={style} id={`font-card-${rank}`}>
+    <div className="font-card fade-in" style={{ ...style, '--scale': scale }} id={`font-card-${rank}`}>
       {/* Header: Name + Score + Download */}
       <div className="font-card__header">
         <div className="font-card__info">

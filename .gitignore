@@ -36,6 +36,9 @@ temp/
 *.tmp
 *.log
 
+# Environment variables & Secrets
+.env
+
 # IDE
 .vscode/
 .idea/
@@ -71,3 +74,6 @@ cloudflared.exe
 # Backups and prompt instructions
 *.zip
 promt_for_stich.txt
+
+# Any file
+режим_Бога.txt
