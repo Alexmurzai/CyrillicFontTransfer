@@ -181,6 +181,7 @@
   height: var(--preview-base-height);
   width: auto;
   object-fit: contain;
+  object-position: left center;
   transform-origin: left center;
   transition: transform var(--duration-normal) var(--ease);
   filter: invert(1) brightness(1.5);

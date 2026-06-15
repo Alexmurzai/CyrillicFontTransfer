@@ -33,7 +33,7 @@ echo.
 REM 2. Stop old backend instances and start FastAPI Backend
 echo [1/3] Checking and restarting Backend on port 8000...
 for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8000 ^| findstr LISTENING') do (
-    echo Stopping old backend process (PID %%a)...
+    echo Stopping old backend process, PID %%a...
     taskkill /f /pid %%a >nul 2>nul
 )
 start "MOCT-Backend" cmd /k "cd /d %~dp0 && %PY_CMD% -m uvicorn backend.main:app --host 0.0.0.0 --port 8000"
@@ -41,9 +41,9 @@ echo Waiting for backend to initialize 5s...
 ping 127.0.0.1 -n 6 >nul
 
 REM 3. Start Vite Frontend with host binding
-echo [2/3] Checking and starting Vite Frontend on port 5173 (exposing to LAN)...
-for /f "tokens=5" %%a in ('netstat -ano ^| findstr :5173 ^| findstr LISTENING') do (
-    echo Stopping old frontend process (PID %%a)...
+echo [2/3] Checking and starting Vite Frontend on port 5188 (exposing to LAN)...
+for /f "tokens=5" %%a in ('netstat -ano ^| findstr :5188 ^| findstr LISTENING') do (
+    echo Stopping old frontend process, PID %%a...
     taskkill /f /pid %%a >nul 2>nul
 )
 start "MOCT-Frontend" cmd /k "cd /d %~dp0frontend && npm run dev -- --host 0.0.0.0"
@@ -51,12 +51,12 @@ echo Waiting for frontend to initialize 3s...
 ping 127.0.0.1 -n 4 >nul
 
 REM 4. Generate URL and QR Code
-set MOBILE_URL=http://%LOCAL_IP%:5173/?api_url=http://%LOCAL_IP%:8000
+set MOBILE_URL=http://%LOCAL_IP%:5188/?api_url=http://%LOCAL_IP%:8000
 
 echo.
 echo ==========================================================
 echo.
-echo  DESKTOP: Open http://localhost:5173/ to view on PC.
+echo  DESKTOP: Open http://localhost:5188/ to view on PC.
 echo.
 echo  MOBILE:  1. Connect your phone to the SAME Wi-Fi network.
 echo           2. Scan the QR code opened on your PC.

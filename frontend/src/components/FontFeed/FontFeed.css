@@ -214,7 +214,8 @@
     min-height: 32px;
   }
   .font-feed__scale {
-    display: none;
+    display: flex;
+    margin-top: var(--sp-2);
   }
   .font-feed__list {
     gap: var(--sp-4);

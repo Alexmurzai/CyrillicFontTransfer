@@ -165,6 +165,9 @@
     display: none;
   }
   .uploader__preview {
-    max-height: 200px;
+    max-height: none;
+    height: auto;
+    width: 100%;
+    display: block;
   }
 }

@@ -291,7 +291,10 @@ export default function App() {
                     type="text"
                     className="text-input text-input--mobile"
                     value={previewText}
-                    onChange={(e) => setPreviewText(e.target.value)}
+                    onChange={(e) => {
+                      setPreviewText(e.target.value);
+                      updatePreview({ text: e.target.value, letterSpacing, wordSpacing });
+                    }}
                     placeholder={t('placeholder_preview')}
                   />
                 </div>
