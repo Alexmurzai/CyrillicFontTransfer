@@ -31,6 +31,20 @@ class InferenceEngine:
         with open(meta_path, "r", encoding="utf-8") as f:
             self.metadata = json.load(f)
             
+        # Динамическое исправление абсолютных путей Windows для совместимости с Linux
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        for item in self.metadata:
+            path_normalized = item["path"].replace("\\", "/")
+            marker = "CyrillicFontTransfer/"
+            if marker in path_normalized:
+                rel_path = path_normalized.split(marker, 1)[1]
+            else:
+                parts = path_normalized.split('/')
+                rel_path = "/".join(parts[-2:]) if len(parts) >= 2 else path_normalized
+            
+            # Сохраняем корректный путь для текущей ОС
+            item["path"] = os.path.join(project_root, rel_path)
+            
         # Трансформы (без принудительного изменения пропорций)
         self.char_transform = transforms.Compose([
             transforms.ToTensor(),
