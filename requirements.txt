@@ -28,6 +28,12 @@ scipy>=1.13.0
 tqdm>=4.66.0
 requests>=2.31.0
 
+# API / Backend
+fastapi
+python-multipart
+PyJWT
+bcrypt
+
 # ----------------------------------------
 # NOTE: PyTorch with CUDA must be installed
 # separately via:
