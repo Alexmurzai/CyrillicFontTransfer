@@ -42,7 +42,8 @@ pip install uvicorn gunicorn watchfiles
 echo "Building React frontend..."
 cd $PROJECT_DIR/frontend
 npm install
-npm run build
+node node_modules/vite/bin/vite.js build
+cd $PROJECT_DIR
 cd $PROJECT_DIR
 
 # 5. Setup Systemd Service
