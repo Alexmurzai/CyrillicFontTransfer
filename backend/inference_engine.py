@@ -139,6 +139,9 @@ class InferenceEngine:
             return img
         except Exception as e:
             # Fallback на случай ошибки
+            print(f"[ERR] Failed to render font preview for {font_path}: {e}")
+            import traceback
+            traceback.print_exc()
             return Image.new("L", (200, 64), 255)
 
 
