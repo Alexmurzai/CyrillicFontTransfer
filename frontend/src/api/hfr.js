@@ -4,7 +4,7 @@
  */
 
 const STORAGE_KEY = 'hfr_api_url';
-const DEFAULT_API_URL = 'https://sierra-merely-glen-translations.trycloudflare.com';
+const DEFAULT_API_URL = '';
 
 /**
  * Получить текущий API URL.
