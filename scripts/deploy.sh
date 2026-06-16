@@ -74,6 +74,9 @@ sudo systemctl restart moct-backend
 
 # 6. Configure Nginx Web Server & Reverse Proxy
 echo "[6/6] Configuring Nginx web server..."
+# Disable sendfile globally to prevent packet truncation on virtual interfaces
+sudo sed -i 's/sendfile on;/sendfile off;/g' /etc/nginx/nginx.conf
+
 NGINX_CONF="/etc/nginx/sites-available/moct"
 
 sudo bash -c "cat > $NGINX_CONF" <<EOL
@@ -99,6 +102,17 @@ server {
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
+
+        # Increase timeouts for slow ML inference
+        proxy_connect_timeout 300s;
+        proxy_read_timeout 300s;
+        proxy_send_timeout 300s;
+
+        # Buffering settings to avoid premature truncation
+        proxy_buffering on;
+        proxy_buffer_size 128k;
+        proxy_buffers 4 256k;
+        proxy_busy_buffers_size 256k;
     }
 }
 EOL
